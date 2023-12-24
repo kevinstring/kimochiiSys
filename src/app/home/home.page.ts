@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { ArticulosService } from '../articulos.service';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +9,15 @@ import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/stan
   standalone: true,
   imports: [IonHeader, IonToolbar, IonTitle, IonContent],
 })
-export class HomePage {
-  constructor() {}
+export class HomePage implements OnInit {
+  constructor(private servicio:ArticulosService) {}
+ngOnInit(): void {
+    this.getProductos()
+}
+
+  getProductos(){
+    this.servicio.get('articulos').subscribe((a:any)=>{
+        console.log(a)
+    })
+  }
 }

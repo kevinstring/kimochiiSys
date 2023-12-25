@@ -17,8 +17,12 @@ ngOnInit(): void {
     this.getArticulo()
 }
   getArticulo(){
-    this.servicio.getProducto('getProducto').subscribe((a)=>{
-      console.log(a)
+    this.servicio.get('getProducto').subscribe({
+      next:(data:any)=>{
+
+      },error:(err:any)=>{
+        console.log(err)
+      }
     })
   }
 }

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonContent, IonicModule } from '@ionic/angular';
@@ -16,7 +16,7 @@ import { ServicioService } from 'src/app/servicio.service';
 
   imports:[IonicModule,CommonModule,ReactiveFormsModule,FormsModule,ToastModule]
 })
-export class NavBarComponent  {
+export class NavBarComponent implements OnInit  {
   titulo="Kimochii"
   categoriaAnime=false
   categoria:any;
@@ -27,18 +27,47 @@ export class NavBarComponent  {
   }
   asignarSubcat:any={}
   
-categorias:any=[
+secciones:any=[
   {TAB:"Producto"},
   {TAB:"Categoria/SubCategoria"},
 
 ]
+categorias:any=[]
 subcategorias:any=[
 
 ]
+subcategoriasRef:any=[]
 indiceCategoria=0;
 
 @Input() home=false;
+ngOnInit(): void {
+this.getCategorias()
+}
+
   constructor(private modalController:ModalController,private servicio:ServicioService,private mensaje:MessageService) { }
+ 
+  onFileChanged(event: any) {
+    const file: File = event.target.files[0];
+  
+    if (file) {
+      console.log(file)
+      const formData = new FormData();
+      formData.append('foto', file);
+  
+      this.servicio.post('updateAmazon', formData).subscribe(
+        (response:any) => {
+          
+          // console.log(response);
+          // this.selectedImage=response.url
+          // console.log(this.selectedImage)
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    }
+  }
+
   elegirCategoria(num:any){
     this.indiceCategoria=num
   }
@@ -68,16 +97,17 @@ indiceCategoria=0;
     }
   }
   getSubCategorias(ref){
-    this.servicio.post('getSubCategorias',{ref:ref}).subscribe(({next:(data)=>{
+    this.servicio.post('getSubCategorias',{ref:ref}).subscribe(({next:(data:any)=>{
       if(true){
-        
+        this.subcategoriasRef=data.subcategoria;
+        console.log(this.subcategoriasRef)
       }
     }}))
   }
   catAnime(cat:any){
     console.log(cat)
     this.getSubCategorias(cat)
-
+ 
     if(cat=="1"){
       this.categoriaAnime=true
     }else{
@@ -86,11 +116,14 @@ indiceCategoria=0;
 
   }
 
-  crearCategoria(categoria){
-    this.servicio.post('crearCategoria',{categoria:categoria}).subscribe(({next:(data)=>{
+  crearCategoria(){
+    console.log(this.categoria)
+    this.servicio.post('postCategoria',{categoria:this.categoria}).subscribe(({next:(data)=>{
       console.log(data)
       if(true){
         this.mensaje.add({ severity: 'success', summary: 'Listo!', detail: 'Se ha creado la categoria exitosamente' })
+     this.categoria=""
+     this.getCategorias()
       }
     },
   error:(err)=>{
@@ -101,26 +134,29 @@ indiceCategoria=0;
   }
 
   crearSubCategoria(subcategoria){
-    this.servicio.post('crearSubcategoria',{subcategoria:subcategoria}).subscribe(({next:(data)=>{
+    console.log(subcategoria)
+    this.servicio.post('postSubCategoria',{subcategoria:subcategoria}).subscribe(({next:(data)=>{
       console.log(data)
       if(true){
         this.mensaje.add({ severity: 'success', summary: 'Listo!', detail: 'Se ha creado la categoria exitosamente' })
+       this.subCategoria=""
+       this.getCategorias()
       }
     },
   error:(err)=>{
-    console.log(err)
-    this.mensaje.add({ severity: 'error', summary: 'ups!', detail: 'Ha ocurrido un error' })
+    console.log(err.error)
+    this.mensaje.add({ severity: 'error', summary: 'ups!', detail: err.error.error })
 
   }}))
   }
 
   asignarSubCategoria(datos){
 
-    const form = new FormData()
+    let form = new FormData()
     form.append('categoria',datos.categoria)
     form.append('subCategoria',datos.subCategoria)
-
-    this.servicio.post('asignarSubCategoria',form).subscribe(({next:(data)=>{
+  console.log(form)
+    this.servicio.post('asignarSubCategoria',datos).subscribe(({next:(data)=>{
       console.log(data)
       if(true){
         this.mensaje.add({ severity: 'success', summary: 'Listo!', detail: 'Se ha asignado exitosamente' })
@@ -128,8 +164,22 @@ indiceCategoria=0;
     },
   error:(err)=>{
     console.log(err)
-    this.mensaje.add({ severity: 'error', summary: 'ups!', detail: 'Ha ocurrido un error' })
+    this.mensaje.add({ severity: 'error', summary: 'ups!', detail: err.error.error })
 
+  }}))
+  }
+
+  getCategorias(){
+    this.servicio.get('getCategorias').subscribe(({next:(data:any)=>{
+      if(true){
+        this.categorias=data.categoria
+        this.subcategorias=data.subcategoria
+
+        console.log(data)
+      }
+    },
+  error:(err:any)=>{
+    
   }}))
   }
   }

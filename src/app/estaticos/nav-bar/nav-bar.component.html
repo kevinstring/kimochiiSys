@@ -33,14 +33,14 @@
 <dialog id="AgregarInventario" class="modal">
   <div class="modal-box">
     <div role="tablist" class="tabs tabs-boxed">
-      <a role="tab" class="tab " (click)="elegirCategoria(i)"  [ngClass]="{'tab-active':i === indiceCategoria}"  *ngFor="let category of categorias; let i =index">
+      <a role="tab" class="tab " (click)="elegirCategoria(i)"  [ngClass]="{'tab-active':i === indiceCategoria}"  *ngFor="let category of secciones; let i =index">
         {{category.TAB}}</a>
     
 
     </div>
     <div class="max-w-md mx-auto mt-8">
    
-        <form class="form flex flex-col justify-center items-center" *ngIf="indiceCategoria===0">
+        <form class="form flex flex-col justify-center items-center" *ngIf="indiceCategoria===0" enctype="multipart/form-data">
           <!-- Nombre del producto -->
           <div class="mb-4">
             <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre del Producto:</label>
@@ -50,7 +50,7 @@
           <!-- Foto -->
           <div class="mb-4">
             <label for="foto" class="block text-gray-700 text-sm font-bold mb-2">Foto:</label>
-            <input type="file" class="file-input file-input-primary file-input-bordered file-input-sm w-full max-w-xs" [(ngModel)]="nuevoProducto.foto" [ngModelOptions]="{standalone: true}" />
+            <input type="file" class="file-input file-input-primary file-input-bordered file-input-sm w-full max-w-xs" [(ngModel)]="nuevoProducto.foto" (change)="onFileChanged($event)" [ngModelOptions]="{standalone: true}" />
           </div>
       
           <!-- Descripción -->
@@ -63,15 +63,14 @@
           <div class="mb-4">
             <label for="categoria" class="block text-gray-700 text-sm font-bold mb-2">Categoría:</label>
             <select id="categoria" name="categoria" (change)="catAnime(nuevoProducto.categoria)" class="select select-bordered" [(ngModel)]="nuevoProducto.categoria" [ngModelOptions]="{standalone: true}">
-              <option value="1">Categoría 1</option>
-              <option value="2">Categoría 2</option>
+             <option *ngFor="let categoria of categorias" [value]="categoria.ID_CATEGORIA">{{categoria.NOMBRE}}</option>
               <!-- Agrega más opciones según tus necesidades -->
             </select>
           </div>
           <div class="mb-4">
             <label for="categoria" class="block text-gray-700 text-sm font-bold mb-2">subCategoria:</label>
             <select id="categoria" name="categoria" (change)="catAnime(nuevoProducto.categoria)" class="select select-bordered" [(ngModel)]="nuevoProducto.categoria" [ngModelOptions]="{standalone: true}">
-              <option *ngFor="let subcategoria of subcategorias" value="subcategoria.id">subcategoria.nombre</option>
+              <option *ngFor="let subcategoria of subcategoriasRef" [value]="subcategoria.ID">{{subcategoria.NOMBRE}}</option>
               <!-- Agrega más opciones según tus necesidades -->
             </select>
           </div>
@@ -115,22 +114,24 @@
           <div class="flex flex-col justify-center items-center gap-4 border">
             <div class="flex flex-row justify-center items-start gap-2">
               <span>Crear Categoria</span>
-              <input class="input input-sm input-primary" placeholder="categoria nueva"  [(ngModel)]="categoria">
-              <button class="btn btn-xs rounded-2xl text-primary" (click)="crearCategoria(categoria)">Crear</button>
+              <input class="input input-sm input-primary" placeholder="categoria nueva"  [(ngModel)]="categoria" [ngModelOptions]="{standalone: true}" >
+              <button class="btn btn-xs rounded-2xl text-primary" (click)="crearCategoria()">Crear</button>
             </div>
           <div class="flex  flex-row justify-center items-start gap-2">
         <span>Crear Subcategoria</span>
-        <input class="input input-sm input-primary" placeholder="categoria nueva">
-        <button class="btn btn-xs rounded-2xl text-primary" (click)="crearSubCategoria(subCategoria)" >Crear</button>
+        <input class="input input-sm input-primary" placeholder="categoria nueva" [(ngModel)]="subCategoria" [ngModelOptions]="{standalone: true}">
+        <button class="btn btn-xs rounded-2xl text-primary" (click)="crearSubCategoria(subCategoria)"  >Crear</button>
       </div>
     </div>
     <div class="flex flex-col justify-center items-center gap-3 border">
       <span class="font-bold text-sm text-slate-500">Asignar subCategoria a Categoria</span>
           <div class="flex flex-col justify-center items-center">
             <span>Seleccione subcategoria</span>
-        <select class="select select-bordered" [(ngModel)]="asignarSubcat.subCategoria"><option>subcategorias</option></select>
+            <select class="select select-bordered" [(ngModel)]="asignarSubcat.subCategoria"  [ngModelOptions]="{standalone: true}"><option *ngFor="let subcategoria of subcategorias" [value]="subcategoria.ID">{{subcategoria.NOMBRE}}</option></select>
+
         <span>Seleccione Categoria a asignar</span>
-        <select class="select select-bordered" [(ngModel)]="asignarSubcat.categoria"><option>subcategorias</option></select>
+        <select class="select select-bordered" [(ngModel)]="asignarSubcat.categoria"  [ngModelOptions]="{standalone: true}"><option *ngFor="let categoria of categorias" [value]="categoria.ID_CATEGORIA">{{categoria.NOMBRE}}</option></select>
+
       </div>
 
       <button class="btn btn-sm btn-primary text-white" (click)="asignarSubCategoria(asignarSubcat)">Asignar</button>

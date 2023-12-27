@@ -134,6 +134,7 @@ this.getCategorias()
   }
 
   crearSubCategoria(subcategoria){
+
     console.log(subcategoria)
     this.servicio.post('postSubCategoria',{subcategoria:subcategoria}).subscribe(({next:(data)=>{
       console.log(data)
@@ -155,6 +156,7 @@ this.getCategorias()
     let form = new FormData()
     form.append('categoria',datos.categoria)
     form.append('subCategoria',datos.subCategoria)
+    
   console.log(form)
     this.servicio.post('asignarSubCategoria',datos).subscribe(({next:(data)=>{
       console.log(data)

@@ -127,7 +127,8 @@
       <span class="font-bold text-sm text-slate-500">Asignar subCategoria a Categoria</span>
           <div class="flex flex-col justify-center items-center">
             <span>Seleccione subcategoria</span>
-            <select class="select select-bordered" [(ngModel)]="asignarSubcat.subCategoria"  [ngModelOptions]="{standalone: true}"><option *ngFor="let subcategoria of subcategorias" [value]="subcategoria.ID">{{subcategoria.NOMBRE}}</option></select>
+            <select class="select select-bordered" [(ngModel)]="asignarSubcat.subCategoria"  [ngModelOptions]="{standalone: true}"><option *ngFor="let subcategoria of subcategorias" [value]="subcategoria.ID">{{subcategoria.NOMBRE}} <span class="text-primary">({{subcategoria.NOMBRECAT}})</span>
+            </option></select>
 
         <span>Seleccione Categoria a asignar</span>
         <select class="select select-bordered" [(ngModel)]="asignarSubcat.categoria"  [ngModelOptions]="{standalone: true}"><option *ngFor="let categoria of categorias" [value]="categoria.ID_CATEGORIA">{{categoria.NOMBRE}}</option></select>

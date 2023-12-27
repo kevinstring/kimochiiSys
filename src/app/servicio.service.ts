@@ -17,15 +17,17 @@ export class ServicioService {
 
   post(url:any,data: any){
     // Ejemplo de encabezados (headers)
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer tu-token',
-      'Content-Type': 'application/json',
-      // Agrega otros encabezados según sea necesario
-    });
+    // const headers = new HttpHeaders({
+    //   'Authorization': 'Bearer tu-token',
+    //   'Content-Type': 'multipart/form-data',
+    //   'Accept': 'application/json',
+    //   'enctype': 'multipart/form-data',
+    //   // Agrega otros encabezados según sea necesario
+    // });
 
     // Agrega los encabezados a la solicitud POST
-    const options = { headers: headers };
+    // const options = { headers: headers };
 
-    return this.http.post(this.url + url, data, options);
+    return this.http.post(this.url + url, data);
   }
 }

@@ -69,7 +69,7 @@
           </div>
           <div class="mb-4">
             <label for="categoria" class="block text-gray-700 text-sm font-bold mb-2">subCategoria:</label>
-            <select id="categoria" name="categoria" (change)="catAnime(nuevoProducto.categoria)" class="select select-bordered" [(ngModel)]="nuevoProducto.categoria" [ngModelOptions]="{standalone: true}">
+            <select id="categoria" name="categoria" (change)="catAnime(nuevoProducto.categoria)" class="select select-bordered" [(ngModel)]="nuevoProducto.subcategoria" [ngModelOptions]="{standalone: true}">
               <option *ngFor="let subcategoria of subcategoriasRef" [value]="subcategoria.ID">{{subcategoria.NOMBRE}}</option>
               <!-- Agrega más opciones según tus necesidades -->
             </select>

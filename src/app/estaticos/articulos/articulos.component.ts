@@ -1,5 +1,5 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, Input, NgModule, OnInit, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Toast, ToastModule } from 'primeng/toast';
@@ -16,7 +16,8 @@ import { MessageService } from 'primeng/api';
   imports:[IonicModule,CommonModule,ReactiveFormsModule,FormsModule,ToastModule]
 })
 export class ArticulosComponent  implements OnInit {
-
+@Input() productos:any=[]
+idEdicion:any
 categorias:any=[
   {NOMBRE:"Nombre1"},
   {NOMBRE:"Nombre2"},
@@ -30,17 +31,20 @@ articulos:any=[]
 
    }
 
-  ngOnInit() {console.log("hola")}
+  ngOnInit() {console.log(this.productos)}
   elegirCategoria(id:any){
   this.indiceCategoria=id;
   }
 
-  editarProducto(){
+  editarProducto(producto,id){
+    this.idEdicion=id
 this.editar=true;
+console.log(producto)
   }
 
   finalizarEditarProducto(){
     this.editar=false
+    this.idEdicion=0
     console.log(this.productoEditado)
     const form = new FormData()
    

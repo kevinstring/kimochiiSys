@@ -54,17 +54,17 @@ this.getCategorias()
       const formData = new FormData();
       formData.append('foto', file);
   
-      this.servicio.post('updateAmazon', formData).subscribe(
-        (response:any) => {
-          
-          // console.log(response);
-          // this.selectedImage=response.url
-          // console.log(this.selectedImage)
-        },
-        (error) => {
-          console.error(error);
+      this.servicio.post('updateAmazon', formData).subscribe(({next:(data:any)=>{        if(data.success){
+            this.nuevoProducto.foto=data.url;
+            this.mensaje.add({severity:'success',summary:'Listo!',detail:data.message})
         }
-      );
+      },
+    error:(err:any)=>{
+      this.mensaje.add({ severity: 'error', summary: 'Ups!', detail: err.error.error })
+
+    }}
+      
+      ) );
     }
   }
 
@@ -73,12 +73,31 @@ this.getCategorias()
   }
   guardarProducto(producto:any,ref:any){
     if(ref==='1'){
-      //llamar al servicio y postear el producto y Mantener la categora.
-      this.nuevoProducto={}
-      this.nuevoProducto.categoria=producto.categoria
+      let form = new FormData()
+      form.append('nombre',producto.nombre)
+      form.append('foto',producto.foto)
+      form.append('descripcion',producto.descripcion)
+      form.append('categoria',producto.categoria)
+      form.append('subcategoria',producto.subcategoria)
+      form.append('costo',producto.costo)
+      form.append('personaje',producto.personaje)
+      form.append('precio',producto.precio)
+      form.append('cantidad',producto.cantidad)
 
-      this.mensaje.add({ severity: 'success', summary: 'Listo!', detail: 'Se ha creado el producto Exitosamente' })
-      this.mensaje.add({ severity: 'error', summary: 'Ups!', detail: 'Ha ocurrido un error' })
+      //llamar al servicio y postear el producto y Mantener la categora.
+      this.servicio.post('guardarProducto',form).subscribe(({next:(data:any)=>{
+        if(data.success){
+          this.mensaje.add({ severity: 'success', summary: 'Listo!', detail: data.message })
+
+        }
+      },error:(err:any)=>{
+        this.mensaje.add({ severity: 'error', summary: 'Ups!', detail:err.message })
+
+      }}))
+      // this.nuevoProducto={}
+      this.nuevoProducto.categoria=producto.categoria
+      this.nuevoProducto.subcategoria=producto.subcategoria
+
       
     }if(ref==='2'){
       //llamar al servicio y postear el producto, mantener y cerrar el modal.

@@ -7,24 +7,29 @@
 
   </div>
  </div>
- <div class="flex flex-row justify-center items-center mt-8">
-  <div class="card w-64 bg-base-100 shadow-xl" >
-    <figure *ngIf="!editar"><img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure>
-    <div class="card-body" *ngIf="!editar;else edicion">
-      <div class="card-actions justify-end">
-        <div class="badge badge-outline">Categoria</div> 
+ <div class="flex flex-row justify-center flex-wrap gap-7 items-center mt-8">
+  <div class="card w-64 bg-base-100 shadow-xl" *ngFor="let producto of productos;let id = index " >
+   
+    <figure *ngIf="!editar || idEdicion!==producto.ID_PRODUCTO"><img [src]="producto.FOTO" alt="Shoes" /></figure>
+    <div class="card-body" *ngIf="!editar || idEdicion!==producto.ID_PRODUCTO;">
+      <div class="card-actions  justify-center">
+        <div class="badge badge-outline">{{producto.NOMBRE_CATEGORIA}}</div> 
 
-        <div class="badge badge-outline">SubCategoria</div>
+        <div class="badge badge-outline">{{producto.NOMBRE_SUBCAT}}</div>
       </div>
       <h2 class="card-title">
-        Nombre producto
+        {{producto.NOMBRE_PRODUCTO}}
         <!-- <div class="badge badge-secondary">NEW</div> -->
       </h2>
-      <p>Descripcion</p>
+      <p>{{producto.DESCRIPCION}}</p>
+      <div class="flex flex-row justify-center items-center">
+        <p>Costo: {{producto.COSTO}}</p>
+        <p>Precio: {{producto.PRECIO}}</p>
 
+      </div>
     </div>
 
-    <ng-template #edicion>
+    <div *ngIf="idEdicion===producto.ID_PRODUCTO">
       <div class="flex flex-col gap-2 p-3">
       <span class="text-xs text-slate-500">Sube la imagen</span>
 
@@ -65,13 +70,13 @@
 
       
     </div>
-    </ng-template>
+  </div>
     <div class="card">
       <p-toast></p-toast>
       <button type="button" pButton pRipple  label="Show" class="p-button-success"></button>
   </div>
     <div class="card-actions justify-center mb-4">
-      <div *ngIf="!editar" class="badge badge-outline text-blue-500 cursor-pointer" (click)="editarProducto()">Editar</div> 
+      <div *ngIf="!editar" class="badge badge-outline text-blue-500 cursor-pointer" (click)="editarProducto(producto,producto.ID_PRODUCTO)">Editar</div> 
       <div *ngIf="editar" class="badge badge-outline text-blue-500 cursor-pointer" (click)="finalizarEditarProducto()">check</div> 
 
       <div class="badge badge-outline text-green-500 cursor-pointer">Favoritos</div>

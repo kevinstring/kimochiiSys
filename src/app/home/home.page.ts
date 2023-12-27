@@ -13,13 +13,15 @@ import { ArticulosComponent } from '../estaticos/articulos/articulos.component';
 })
 export class HomePage implements OnInit {
   constructor(private servicio:ServicioService) {}
+  productos:any=[]
 ngOnInit(): void {
     this.getArticulo()
 }
   getArticulo(){
     this.servicio.get('getProducto').subscribe({
       next:(data:any)=>{
-
+        
+  this.productos=data
       },error:(err:any)=>{
         console.log(err)
       }

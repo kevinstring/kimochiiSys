@@ -10,4 +10,8 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+  {
+    path:'pdf',
+    loadComponent:()=>import('./pdf-generator-component/pdf-generator-component.component').then((m)=>m.PdfGeneratorComponent)
+  }
 ];

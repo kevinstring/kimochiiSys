@@ -1,5 +1,5 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, Input, NgModule, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, Input, NgModule, OnInit, Output, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Toast, ToastModule } from 'primeng/toast';
@@ -7,7 +7,10 @@ import { ServicioService } from 'src/app/servicio.service';
 import { MessageService } from 'primeng/api';
 import { QRCodeModule } from 'angularx-qrcode';
 import { jsPDF } from 'jspdf'
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-articulos',
   templateUrl: './articulos.component.html',
@@ -18,6 +21,8 @@ import { jsPDF } from 'jspdf'
   imports:[IonicModule,CommonModule,ReactiveFormsModule,FormsModule,ToastModule,QRCodeModule]
 })
 export class ArticulosComponent  implements OnInit {
+  @ViewChild('ide', { static: true }) qrcElement: ElementRef;
+
 @Input() productos:any=[]
 idEdicion:any
 hola="hola"
@@ -83,35 +88,50 @@ console.log(producto)
     reader.readAsDataURL(file);
   }
 
-  generatePDF(producto, event) {
-    // Accede al Blob correctamente desde el evento
-    const blob = event.target.files[0];
-  
-    // Realiza la conversión a base64
-    this.blobToBase64(blob).then((data: any) => {
-      console.log(data);
-    });
-  }
-  
-  downloadQR(){
-    const canvas = document.querySelector('canvas') as HTMLCanvasElement;
-    const pngUrl = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-    let downloadLink = document.createElement('a');
- 
-    const pdf = new jsPDF();
+  generateQRCodeAndPDF(product: any) {
+    const qrCodeValue = product.CODIGO; // Valor que se utilizará para el código QR
+    const qrCodeSize = typeof product.qrCodeSize === 'number' ? product.qrCodeSize : 150;
 
-    // Agrega la imagen QR al PDF
-    pdf.addImage(pngUrl, 'PNG', 10, 10, 80, 80); // Ajusta las coordenadas y dimensiones según sea necesario
-  
-    // Descarga el documento PDF
-    pdf.save("qr.pdf");
-    // downloadLink.href = pngUrl;
-    // downloadLink.download = "qr.png";
-    // document.body.appendChild(downloadLink);
-    // downloadLink.click();
-    // document.body.removeChild(downloadLink);
-  }
+    // Puedes ajustar las opciones según tus necesidades
+    const qrCodeOptions = {
+      width: qrCodeSize,
+      height: qrCodeSize,
+    };
 
+    // Agrega el valor y las opciones al producto
+    product.qrCodeUrl = qrCodeValue;
+    product.qrCodeOptions = qrCodeOptions;
+
+    // Lógica para generar el PDF
+    const documentDefinition = {
+      pageSize: { width: 200, height: 300 }, // Ajusta el tamaño según el de tu etiqueta
+      pageMargins: [0, 0, 0, 0], // Puedes ajustar los márgenes según tus necesidades
+      styles: {
+        center: { alignment: 'center' },
+      },
+      content: []
+    };
+
+    for (let i = 0; i < product.CANTIDAD; i++) {
+      // Agrega el nombre del producto en grande
+      documentDefinition.content.push({ text: product.NOMBRE_PRODUCTO, fontSize: 24, bold: true, style: 'center' });
+      
+      // Agrega la categoría centrada
+      documentDefinition.content.push({ text: `${product.NOMBRE_SUBCAT}`, fontSize: 16, style: 'center' });
+      documentDefinition.content.push({ text: `\n\n` });
+
+      // Agrega el código QR centrado
+      documentDefinition.content.push({ qr: product.CODIGO, alignment: 'center', fit: [150]  });
+      documentDefinition.content.push({ text: `\n` });
+      documentDefinition.content.push({ text: `Q${product.PRECIO}`, fontSize: 28, bold: true, style: 'center' });
+
+      // Agrega un salto de página después de cada producto
+      documentDefinition.content.push({ text: '\n', pageBreak: 'after' });
+  
+    }
+
+    pdfMake.createPdf(documentDefinition).open();
+  }
   
 
 

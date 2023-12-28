@@ -82,11 +82,21 @@
 
       <div class="badge badge-outline text-green-500 cursor-pointer">Favoritos</div>
       <div class="badge badge-outline text-red-600 cursor-pointer">Eliminar</div>
+      <div class="badge badge-outline text-red-600 cursor-pointer" (click)="generateQRCodeAndPDF(producto)" >Imprimir</div>
       <!-- <div class="badge badge-outline text-red-600 cursor-pointer" (click)="generarQr(producto)">Generar Qr</div> -->
     </div>
-    <qrcode [qrdata]="producto.CODIGO" (qrCodeURL)="generatePDF(producto,$event )" [allowEmptyString]="true"></qrcode>
-    <a (click)="downloadQR()" download="{{ 'etiqueta_producto_' + producto.CODIGO + '.pdf' }}">Download</a>
+<!-- Ejemplo usando el índice del bucle ngFor -->
+
 
   </div>
  </div>
 </div>
+<dialog id="imprimirQr" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Hello!</h3>
+    <p class="py-4">Press ESC key or click outside to close</p>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>

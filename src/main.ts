@@ -9,7 +9,7 @@ import { environment } from './environments/environment';
 import { provideHttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { Toast } from 'primeng/toast';
-
+import {QRCodeComponent, QRCodeModule} from 'angularx-qrcode/';
 if (environment.production) {
   enableProdMode();
 }
@@ -19,9 +19,12 @@ bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {provide:Toast,useClass: BrowserAnimationsModule},
+
+
     provideIonicAngular(),
     provideRouter(routes),
     provideHttpClient(),
-    provideAnimations()
-    ],
+    provideAnimations(),
+
+  ],
 });

@@ -42,6 +42,9 @@ indiceCategoria=0;
 @Input() home=false;
 ngOnInit(): void {
 this.getCategorias()
+this.nuevoProducto.personaje=""
+
+
 }
 
   constructor(private modalController:ModalController,private servicio:ServicioService,private mensaje:MessageService) { }
@@ -126,11 +129,13 @@ this.getCategorias()
   catAnime(cat:any){
     console.log(cat)
     this.getSubCategorias(cat)
- 
+    
     if(cat=="1"){
       this.categoriaAnime=true
+
     }else{
       this.categoriaAnime=false
+      this.nuevoProducto.personaje=""
     }
 
   }

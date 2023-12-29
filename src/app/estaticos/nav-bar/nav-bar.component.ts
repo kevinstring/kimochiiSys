@@ -21,7 +21,7 @@ export class NavBarComponent implements OnInit  {
   categoriaAnime=false
   categoria:any;
   subCategoria:any;
-
+  categoriaRopa=false;
   nuevoProducto:any={
 
   }
@@ -86,6 +86,9 @@ this.nuevoProducto.personaje=""
       form.append('personaje',producto.personaje)
       form.append('precio',producto.precio)
       form.append('cantidad',producto.cantidad)
+      form.append('tallaS',producto.tallaS)
+      form.append('tallaM',producto.tallaM)
+      form.append('tallaL',producto.tallaL)
 
       //llamar al servicio y postear el producto y Mantener la categora.
       this.servicio.post('guardarProducto',form).subscribe(({next:(data:any)=>{
@@ -130,9 +133,8 @@ this.nuevoProducto.personaje=""
     console.log(cat)
     this.getSubCategorias(cat)
     
-    if(cat=="1"){
-      this.categoriaAnime=true
-
+    if(cat=="3"){
+      this.categoriaRopa=true
     }else{
       this.categoriaAnime=false
       this.nuevoProducto.personaje=""

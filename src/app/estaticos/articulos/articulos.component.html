@@ -7,7 +7,7 @@
 
   </div>
  </div>
- <div class="flex flex-row justify-center flex-wrap gap-7 items-center mt-8">
+ <div class="flex flex-row justify-center flex-wrap gap-7 items-center mt-8" *ngIf="!verRopa" >
   <div class="card w-64 bg-base-100 shadow-xl" *ngFor="let producto of productos;let id = index " >
    
     <figure *ngIf="!editar || idEdicion!==producto.ID_PRODUCTO"><img [src]="producto.FOTO" alt="Shoes" /></figure>
@@ -83,6 +83,96 @@
       <div class="badge badge-outline text-green-500 cursor-pointer">Favoritos</div>
       <div class="badge badge-outline text-red-600 cursor-pointer">Eliminar</div>
       <div class="badge badge-outline text-red-600 cursor-pointer" (click)="generateQRCodeAndPDF(producto)" >Imprimir</div>
+      <!-- <div class="badge badge-outline text-red-600 cursor-pointer" (click)="generarQr(producto)">Generar Qr</div> -->
+    </div>
+<!-- Ejemplo usando el índice del bucle ngFor -->
+
+
+  </div>
+ </div>
+ <div class="flex flex-row justify-center flex-wrap gap-7 items-center mt-8" *ngIf="verRopa" >
+  <div class="card w-64 bg-base-100 shadow-xl" *ngFor="let producto of ropa;let id = index " >
+   
+    <figure *ngIf="!editar || idEdicion!==producto.ID_PRODUCTO"><img [src]="producto.FOTO" alt="Shoes" /></figure>
+    <div class="card-body" *ngIf="!editar || idEdicion!==producto.ID_PRODUCTO;">
+      <div class="card-actions  justify-center">
+        <div class="badge badge-outline">{{producto.NOMBRE_CATEGORIA}}</div> 
+
+        <div class="badge badge-outline">{{producto.NOMBRE_SUBCAT}}</div>
+      </div>
+      <h2 class="card-title">
+        {{producto.NOMBRE_PRODUCTO}}
+        <!-- <div class="badge badge-secondary">NEW</div> -->
+      </h2>
+      <p>{{producto.DESCRIPCION}}</p>
+      <div class="flex flex-row justify-center items-center">
+        <p>Costo: {{producto.COSTO}}</p>
+        <p>Precio: {{producto.PRECIO}}</p>
+
+      </div>
+      <span>{{producto.CODIGO}}</span>
+      <div class="flex flex-row justify-center items-center gap-2">
+        <div class="flex flex-col justify-center items-center" *ngFor="let item of producto.TALLAS | keyvalue">
+          <span>{{item.key}}</span>
+          <div class="badge badge-outline">{{item.value}}</div> 
+        </div >
+
+      </div>
+    </div>
+
+    <div *ngIf="idEdicion===producto.ID_PRODUCTO">
+      <div class="flex flex-col gap-2 p-3">
+      <span class="text-xs text-slate-500">Sube la imagen</span>
+
+      <input type="file" class="file-input file-input-sm file-input-primary " (change)="fileChanged($event)" [(ngModel)]="productoEditado.imagen">
+      
+      <figure><img [src]="productoEditado.imagen || ''" class="object-cover w-52"></figure>
+      <div class="card-actions justify-center">
+        <div class="flex flex-col justify-center items-center gap-1">
+        <span class="text-xs text-slate-500">Categoria</span>
+       <select class="select select-bordered select-sm " [(ngModel)]="productoEditado.categoria"><option>Hola</option><option>Hola</option><option>Hola</option></select>
+      </div>
+      <div class="flex flex-col justify-center items-center gap-1">
+        <span class="text-xs text-slate-500">Sub Categoria</span>
+       <select class="select select-bordered select-sm " [(ngModel)]="productoEditado.subCategoria"><option>Hola</option><option>Hola</option><option>Hola</option></select>
+      </div>      </div>
+      <div class="flex flex-col justify-center items-center gap-1">
+        <span class="text-xs text-slate-500">Nombre del producto</span>
+        <input type="text" class="input input-sm input-primary " [(ngModel)]="productoEditado.nombreProducto" placeholder="Nombre">
+      </div>
+      <div class="flex flex-col justify-center items-center gap-1">
+        <span class="text-xs text-slate-500">Descripcion</span>
+        <textarea type="text" class="textarea textarea-sm textarea-primary " [(ngModel)]="productoEditado.descripcion" placeholder="Nombre"></textarea>
+      </div>
+      <div class="flex flex-row justify-center items-center gap-1">
+        <div class="flex flex-col justify-center items-center gap-1">
+          <span class="text-xs text-slate-500">Costo</span>
+          <input type="number" class="input input-xs input-primary  w-16" [(ngModel)]="productoEditado.costo">
+        </div>
+        <div class="flex flex-col justify-center items-center gap-1">
+          <span class="text-xs text-slate-500">Precio</span>
+          <input type="number" class="input input-xs input-primary w-16" [(ngModel)]="productoEditado.precio">
+        </div>
+      </div>
+      <div class=" flex flex-col justify-center items-center gap-1">
+        <span class="text-xs text-slate-500">Cantidad</span>
+        <input type="number" class="input input-xs input-primary  w-16" [(ngModel)]="productoEditado.cantidad">
+      </div>
+
+      
+    </div>
+  </div>
+    <div class="card">
+      <p-toast></p-toast>
+      <button type="button" pButton pRipple  label="Show" class="p-button-success"></button>
+  </div>
+    <div class="card-actions justify-center mb-4">
+      <div *ngIf="!editar" class="badge badge-outline text-blue-500 cursor-pointer" (click)="editarProducto(producto,producto.ID_PRODUCTO)">Editar</div> 
+      <div *ngIf="editar" class="badge badge-outline text-blue-500 cursor-pointer" (click)="finalizarEditarProducto()">check</div> 
+
+      <div class="badge badge-outline text-green-500 cursor-pointer">Favorites</div>
+      <div class="badge badge-outline text-red-600 cursor-pointer">Eliminar</div>
+      <div class="badge badge-outline text-red-600 cursor-pointer" (click)="generateQRCodeAndPDFRopa(producto)" >Imprimir</div>
       <!-- <div class="badge badge-outline text-red-600 cursor-pointer" (click)="generarQr(producto)">Generar Qr</div> -->
     </div>
 <!-- Ejemplo usando el índice del bucle ngFor -->

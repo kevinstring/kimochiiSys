@@ -24,8 +24,10 @@ export class ArticulosComponent  implements OnInit {
   @ViewChild('ide', { static: true }) qrcElement: ElementRef;
 
 @Input() productos:any=[]
+@Input() ropa:any=[]
 idEdicion:any
 hola="hola"
+verRopa=false
 qrlinkdescarga=""
 categorias:any=[
   {NOMBRE:"Nombre1"},
@@ -43,8 +45,16 @@ articulos:any=[]
   ngOnInit() {console.log(this.productos)}
   elegirCategoria(id:any){
   this.indiceCategoria=id;
+  if(id==1){
+this.verRopa=true
+    console.log(this.productos)
+
+  }else{
+    this.verRopa=false
+   
   }
 
+}
   editarProducto(producto,id){
     this.idEdicion=id
 this.editar=true;
@@ -132,6 +142,56 @@ console.log(producto)
 
     pdfMake.createPdf(documentDefinition).open();
   }
+  
+  generateQRCodeAndPDFRopa(product: any) {
+    const qrCodeSize = typeof product.qrCodeSize === 'number' ? product.qrCodeSize : 150;
+  
+    // Puedes ajustar las opciones según tus necesidades
+    const qrCodeOptions = {
+      width: qrCodeSize,
+      height: qrCodeSize,
+    };
+  
+    // Lógica para generar el PDF
+    const documentDefinition = {
+      pageSize: { width: 200, height: 300 }, // Ajusta el tamaño según el de tu etiqueta
+      pageMargins: [0, 0, 0, 0], // Puedes ajustar los márgenes según tus necesidades
+      styles: {
+        center: { alignment: 'center' },
+      },
+      content: [],
+    };
+  
+    // Itera sobre las tallas y agrega detalles específicos de la talla
+    for (const talla in product.TALLAS) {
+      if (product.TALLAS.hasOwnProperty(talla)) {
+        const cantidadTalla = product.TALLAS[talla];
+  
+        // Agrega detalles específicos de la talla, como la cantidad
+   
+        // Agrega el código QR específico de la talla
+        for (let j = 0; j < cantidadTalla; j++) {
+          // Agrega el nombre del producto en grande solo en la primera iteración
+         
+          documentDefinition.content.push({ text: `${product.NOMBRE_SUBCAT}`, fontSize: 18, style: 'center' });
+
+          documentDefinition.content.push({ text: talla, fontSize: 28, bold: true, style: 'center' });
+            documentDefinition.content.push({ text: `\n` });
+          
+          
+          documentDefinition.content.push({ qr: `${product.CODIGO}-${talla}`, alignment: 'center', fit: [150] });
+          documentDefinition.content.push({ text: `\n` });
+          documentDefinition.content.push({ text: 'Q'+product.PRECIO, fontSize: 28, bold: true, style: 'center' });
+          documentDefinition.content.push({ text: `\n\n` });
+
+
+        }
+      }
+    }
+  
+    pdfMake.createPdf(documentDefinition).open();
+  }
+  
   
 
 

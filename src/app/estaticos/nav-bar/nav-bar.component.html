@@ -74,10 +74,24 @@
               <!-- Agrega más opciones según tus necesidades -->
             </select>
           </div>
-      
+          <div class="flex flex-row justify-center items-center gap-1" *ngIf="categoriaRopa">
+            <div class="flex flex-col justify-center items-center">
+            <label class="block text-gray-700 text-xs font-bold mb-2">Talla S</label>
+          <input [(ngModel)]="nuevoProducto.tallaS" type="number" [ngModelOptions]="{standalone: true}" class="input input-primary input-sm w-20 max-w-xs" >
+        </div>
+        <div class="flex flex-col justify-center items-center">
+          <label class="block text-gray-700 text-xs font-bold mb-2">Talla M</label>
+          <input [(ngModel)]="nuevoProducto.tallaM" type="number" [ngModelOptions]="{standalone: true}" class="input input-primary  input-sm w-20 max-w-xs">
+        </div>
+        <div class="flex flex-col justify-center items-center">
+          <label class="block text-gray-700 text-xs font-bold mb-2">Talla L</label>
+          <input [(ngModel)]="nuevoProducto.tallaL" type="number" [ngModelOptions]="{standalone: true}" class="input input-primary input-sm w-20 max-w-xs">
+        </div>
+        </div>
           <!-- Personaje -->
-          <div class="mb-4" *ngIf="categoriaAnime===true">
-            <label for="personaje" class="block text-gray-700 text-sm font-bold mb-2">Personaje:</label>
+          <div class="mb-4">
+            <label for="personaje" class="block text-gray-700 text-sm font-bold mb-2">Personaje: </label>
+            <label for="personaje" class="block text-gray-700 text-xs font-bold mb-2">Dejar en blanco si se necesita</label>
             <input type="text" id="personaje" name="personaje" class="input input-primary w-full max-w-xs input-sm "  [(ngModel)]="nuevoProducto.personaje" [ngModelOptions]="{standalone: true}">
           </div>
       

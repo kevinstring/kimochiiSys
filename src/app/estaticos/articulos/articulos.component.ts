@@ -42,7 +42,22 @@ articulos:any=[]
 
    }
 
-  ngOnInit() {console.log(this.productos)}
+ async ngOnInit() {
+   this.getArticulo()
+   console.log(this.productos)}
+  getArticulo() {
+    this.servicio.get('getProducto').subscribe({
+      next: (data: any) => {
+        this.productos = data.productos;
+        if (data.ropa) {
+         this.ropa=data.ropa
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    });
+  }
   elegirCategoria(id:any){
   this.indiceCategoria=id;
   if(id==1){
@@ -99,49 +114,57 @@ console.log(producto)
   }
 
   generateQRCodeAndPDF(product: any) {
-    const qrCodeValue = product.CODIGO; // Valor que se utilizará para el código QR
-    const qrCodeSize = typeof product.qrCodeSize === 'number' ? product.qrCodeSize : 150;
-
-    // Puedes ajustar las opciones según tus necesidades
-    const qrCodeOptions = {
-      width: qrCodeSize,
-      height: qrCodeSize,
-    };
-
-    // Agrega el valor y las opciones al producto
-    product.qrCodeUrl = qrCodeValue;
-    product.qrCodeOptions = qrCodeOptions;
-
     // Lógica para generar el PDF
     const documentDefinition = {
-      pageSize: { width: 200, height: 300 }, // Ajusta el tamaño según el de tu etiqueta
-      pageMargins: [0, 0, 0, 0], // Puedes ajustar los márgenes según tus necesidades
-      styles: {
-        center: { alignment: 'center' },
-      },
-      content: []
+      pageSize: { width: 600, height: 800 },
+      pageMargins: [10, 10, 10, 10],
+      content: [
+        {
+          stack: this.createRows(product),
+          unbreakable: true, // Evita que el stack se divida en varias páginas
+        }
+      ],
     };
-
-    for (let i = 0; i < product.CANTIDAD; i++) {
-      // Agrega el nombre del producto en grande
-      documentDefinition.content.push({ text: product.NOMBRE_PRODUCTO, fontSize: 24, bold: true, style: 'center' });
-      
-      // Agrega la categoría centrada
-      documentDefinition.content.push({ text: `${product.NOMBRE_SUBCAT}`, fontSize: 16, style: 'center' });
-      documentDefinition.content.push({ text: `\n\n` });
-
-      // Agrega el código QR centrado
-      documentDefinition.content.push({ qr: product.CODIGO, alignment: 'center', fit: [150]  });
-      documentDefinition.content.push({ text: `\n` });
-      documentDefinition.content.push({ text: `Q${product.PRECIO}`, fontSize: 28, bold: true, style: 'center' });
-
-      // Agrega un salto de página después de cada producto
-      documentDefinition.content.push({ text: '\n', pageBreak: 'after' });
   
-    }
-
     pdfMake.createPdf(documentDefinition).open();
   }
+  
+  // Función para crear los conjuntos de elementos en una fila
+  createRows(product: any) {
+    const rows = [];
+  
+    for (let i = 0; i < product.CANTIDAD; i++) {
+      const row = [
+        { text: product.NOMBRE_PRODUCTO, fontSize: 12, bold: true, alignment: 'center' },
+        { text: `${product.NOMBRE_SUBCAT}`, fontSize: 10, alignment: 'center' },
+        { qr: product.CODIGO, alignment: 'center', fit: [150] },
+        { text: `${product.CODIGO}`, fontSize: 10, alignment: 'center' },
+        { text: `Q${product.PRECIO}`, fontSize: 12, bold: true, alignment: 'center' }
+      ];
+  
+      rows.push(row);
+  
+      // Agrega un espacio horizontal entre conjuntos
+      if ((i + 1) < product.CANTIDAD) {
+        rows.push({ text: '     ', pageBreak: 'after' });
+      }
+    }
+  
+    return rows;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   generateQRCodeAndPDFRopa(product: any) {
     const qrCodeSize = typeof product.qrCodeSize === 'number' ? product.qrCodeSize : 150;
@@ -194,6 +217,22 @@ console.log(producto)
   
   
 
+  favorito(id){
+    let form = new FormData()
+    form.append('id',id)
+    form.append('favorito','1')
+    this.servicio.post('postFavorito',form).subscribe({next:(data:any)=>{
+   
+        this.mensaje.add({ severity: 'success', summary: 'Success', detail: data.message });
+  
+    },
+    error:(error)=>{
+      console.log(error)
+      this.mensaje.add({ severity: 'error', summary: 'Error', detail: 'Message Content' });
+    }
 
+
+    })
+  }
   
 }

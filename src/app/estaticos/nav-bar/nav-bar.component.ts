@@ -22,6 +22,8 @@ export class NavBarComponent implements OnInit  {
   categoria:any;
   subCategoria:any;
   categoriaRopa=false;
+  categoriaSeleccionada:any;
+  tagsElegidos:any=[]
   nuevoProducto:any={
 
   }
@@ -32,8 +34,8 @@ secciones:any=[
   {TAB:"Categoria/SubCategoria"},
 
 ]
-categorias:any=[]
-subcategorias:any=[
+tags:any=[]
+categorias:any=[
 
 ]
 subcategoriasRef:any=[]
@@ -72,7 +74,46 @@ this.nuevoProducto.personaje=""
   }
 
   elegirCategoria(num:any){
+    console.log(num)
     this.indiceCategoria=num
+
+  }
+
+  seleccionarCategoria(idcategoria){
+    if(this.categoriaSeleccionada==idcategoria){
+      this.categoriaSeleccionada=""
+      return
+    }else{
+      this.categoriaSeleccionada=idcategoria
+      this.nuevoProducto.categoria=this.categoriaSeleccionada
+
+    }
+  
+  }
+
+  seleccionarTag(idtag: any) {
+    console.log(idtag);
+  
+    // Verificar si la categoría ya está seleccionada
+    const index = this.tagsElegidos.indexOf(idtag);
+  
+    if (index !== -1) {
+      // Si la categoría está seleccionada, eliminarla
+      this.tagsElegidos.splice(index, 1);
+    } else {
+      // Si la categoría no está seleccionada, agregarla
+      this.tagsElegidos.push(idtag);
+      this.nuevoProducto.tags=this.tagsElegidos
+    }
+  
+    console.log(this.tagsElegidos);
+  }
+  
+
+  getArticulos(){
+    this.servicio.get('getProducto').subscribe(({next:(data:any)=>{
+
+    }}))
   }
   guardarProducto(producto:any,ref:any){
     if(ref==='1'){
@@ -81,7 +122,7 @@ this.nuevoProducto.personaje=""
       form.append('foto',producto.foto)
       form.append('descripcion',producto.descripcion)
       form.append('categoria',producto.categoria)
-      form.append('subcategoria',producto.subcategoria)
+      form.append('tags',JSON.stringify(producto.tags))
       form.append('costo',producto.costo)
       form.append('personaje',producto.personaje)
       form.append('precio',producto.precio)
@@ -162,7 +203,7 @@ this.nuevoProducto.personaje=""
   crearSubCategoria(subcategoria){
 
     console.log(subcategoria)
-    this.servicio.post('postSubCategoria',{subcategoria:subcategoria}).subscribe(({next:(data)=>{
+    this.servicio.post('postTag',{subcategoria:subcategoria}).subscribe(({next:(data)=>{
       console.log(data)
       if(true){
         this.mensaje.add({ severity: 'success', summary: 'Listo!', detail: 'Se ha creado la categoria exitosamente' })
@@ -200,8 +241,8 @@ this.nuevoProducto.personaje=""
   getCategorias(){
     this.servicio.get('getCategorias').subscribe(({next:(data:any)=>{
       if(true){
+        this.tags=data.tags
         this.categorias=data.categoria
-        this.subcategorias=data.subcategoria
 
         console.log(data)
       }

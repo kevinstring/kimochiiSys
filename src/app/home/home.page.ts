@@ -11,25 +11,9 @@ import { ArticulosComponent } from '../estaticos/articulos/articulos.component';
   standalone: true,
   imports: [IonHeader, IonToolbar, IonTitle, IonContent,IonApp,ArticulosComponent,NavBarComponent],
 })
-export class HomePage implements OnInit {
+export class HomePage {
   constructor(private servicio:ServicioService) {}
-  productos:any=[]
-  ropa:any=[]
-ngOnInit(): void {
-    this.getArticulo()
-}
-getArticulo() {
-  this.servicio.get('getProducto').subscribe({
-    next: (data: any) => {
-      this.productos = data.productos;
-      if (data.ropa) {
-       this.ropa=data.ropa
-      }
-    },
-    error: (err: any) => {
-      console.log(err);
-    }
-  });
-}
+
+
 
 }

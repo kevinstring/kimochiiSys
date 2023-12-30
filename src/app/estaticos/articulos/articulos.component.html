@@ -170,7 +170,9 @@
       <div *ngIf="!editar" class="badge badge-outline text-blue-500 cursor-pointer" (click)="editarProducto(producto,producto.ID_PRODUCTO)">Editar</div> 
       <div *ngIf="editar" class="badge badge-outline text-blue-500 cursor-pointer" (click)="finalizarEditarProducto()">check</div> 
 
-      <div class="badge badge-outline text-green-500 cursor-pointer">Favorites</div>
+      <div class="badge badge-outline text-green-500 cursor-pointer" (click)="favorito(producto.CODIGO)">Favorites</div>
+      <div *ngIf="producto.CATEGORIA" class="badge badge-outline text-green-200 cursor-pointer" (click)="favorito(producto.CODIGO)">Agregado a fav</div>
+      
       <div class="badge badge-outline text-red-600 cursor-pointer">Eliminar</div>
       <div class="badge badge-outline text-red-600 cursor-pointer" (click)="generateQRCodeAndPDFRopa(producto)" >Imprimir</div>
       <!-- <div class="badge badge-outline text-red-600 cursor-pointer" (click)="generarQr(producto)">Generar Qr</div> -->

@@ -24,6 +24,7 @@
 
   
   <button class="btn rounded-2xl btn-sm btn-secondary" *ngIf="home" onclick="AgregarInventario.showModal()">+</button>
+  <button class="btn rounded-2xl btn-sm btn-secondary" *ngIf="home" (click)="getArticulos()">-</button>
 
 
 <!-- <img src="../assets/kimochiiB.JPG" class="w-44"> -->
@@ -58,22 +59,30 @@
             <label for="descripcion" class="block text-gray-700 text-sm font-bold mb-2">Descripción:</label>
             <textarea id="descripcion" name="descripcion" class="input input-primary w-full max-w-xs" [(ngModel)]="nuevoProducto.descripcion" [ngModelOptions]="{standalone: true}"></textarea>
           </div>
-      
+          <label for="categorias" class="block text-gray-700 text-sm font-bold mb-2">Categoria:</label>
+          <span class="text-xs font-bold mb-2">Selecciona una categoria</span>
+          <div class="mb-4 flex flex-row justify-center items-center gap-3 flex-wrap">
+            <button 
+            class="btn btn-xs" 
+            *ngFor="let categoria of categorias"
+            [ngClass]="{'btn-primary': categoriaSeleccionada===categoria.ID, 'btn-secondary': !categoriaSeleccionada===categoria.ID}"
+            (click)="seleccionarCategoria(categoria.ID)"
+>
+            {{categoria.NOMBRE}}
+          </button>          </div>
           <!-- Categoría (select) -->
-          <div class="mb-4">
-            <label for="categoria" class="block text-gray-700 text-sm font-bold mb-2">Categoría:</label>
-            <select id="categoria" name="categoria" (change)="catAnime(nuevoProducto.categoria)" class="select select-bordered" [(ngModel)]="nuevoProducto.categoria" [ngModelOptions]="{standalone: true}">
-             <option *ngFor="let categoria of categorias" [value]="categoria.ID_CATEGORIA">{{categoria.NOMBRE}}</option>
-              <!-- Agrega más opciones según tus necesidades -->
-            </select>
-          </div>
-          <div class="mb-4">
-            <label for="categoria" class="block text-gray-700 text-sm font-bold mb-2">subCategoria:</label>
-            <select id="categoria" name="categoria" class="select select-bordered" [(ngModel)]="nuevoProducto.subcategoria" [ngModelOptions]="{standalone: true}">
-              <option *ngFor="let subcategoria of subcategoriasRef" [value]="subcategoria.ID">{{subcategoria.NOMBRE}}</option>
-              <!-- Agrega más opciones según tus necesidades -->
-            </select>
-          </div>
+          <label for="categorias" class="block text-gray-700 text-sm font-bold mb-2">Tags:</label>
+          <span class="text-xs font-bold mb-2">Selecciona todas las que sean necesarias y describan al producto</span>
+          <div class="mb-4 flex flex-row justify-center items-center gap-3   flex-wrap">
+            <button 
+            class="btn btn-xs" 
+            *ngFor="let categoria of tags"
+            [ngClass]="{'btn-primary': tagsElegidos.includes(categoria.ID_TAG), 'btn-secondary': !tagsElegidos.includes(categoria.ID_TAG)}"
+            (click)="seleccionarTag(categoria.ID_TAG)"
+          >
+            {{categoria.NOMBRE}}
+          </button>          </div>
+
           <div class="flex flex-row justify-center items-center gap-1" *ngIf="categoriaRopa">
             <div class="flex flex-col justify-center items-center">
             <label class="block text-gray-700 text-xs font-bold mb-2">Talla S</label>
@@ -89,13 +98,13 @@
         </div>
         </div>
           <!-- Personaje -->
-          <div class="mb-4">
+          <!-- <div class="mb-4">
             <label for="personaje" class="block text-gray-700 text-sm font-bold mb-2">Personaje: </label>
             <label for="personaje" class="block text-gray-700 text-xs font-bold mb-2">Dejar en blanco si se necesita</label>
             <input type="text" id="personaje" name="personaje" class="input input-primary w-full max-w-xs input-sm "  [(ngModel)]="nuevoProducto.personaje" [ngModelOptions]="{standalone: true}">
           </div>
       
-
+ -->
 
 
           <!-- Costo -->
@@ -135,12 +144,12 @@
               <button class="btn btn-xs rounded-2xl text-primary" (click)="crearCategoria()">Crear</button>
             </div>
           <div class="flex  flex-row justify-center items-start gap-2">
-        <span>Crear Subcategoria</span>
-        <input class="input input-sm input-primary" placeholder="categoria nueva" [(ngModel)]="subCategoria" [ngModelOptions]="{standalone: true}">
+        <span>Crear Tag</span>
+        <input class="input input-sm input-primary" placeholder="nuevo Tag" [(ngModel)]="subCategoria" [ngModelOptions]="{standalone: true}">
         <button class="btn btn-xs rounded-2xl text-primary" (click)="crearSubCategoria(subCategoria)"  >Crear</button>
       </div>
     </div>
-    <div class="flex flex-col justify-center items-center gap-3 border">
+    <!-- <div class="flex flex-col justify-center items-center gap-3 border">
       <span class="font-bold text-sm text-slate-500">Asignar subCategoria a Categoria</span>
           <div class="flex flex-col justify-center items-center">
             <span>Seleccione subcategoria</span>
@@ -155,7 +164,7 @@
       <button class="btn btn-sm btn-primary text-white" (click)="asignarSubCategoria(asignarSubcat)">Asignar</button>
       <button class="btn btn-sm bg-red-500 text-white">Cancelar</button>
 
-    </div>
+    </div> -->
         </form>
       </div>
       

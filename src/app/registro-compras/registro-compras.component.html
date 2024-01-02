@@ -1,0 +1,119 @@
+
+<app-nav-bar [home]="false"></app-nav-bar>
+<ion-content  class="h-screen">
+  <div>
+    <div class="flex flex-row justify-center items-center mt-5">
+      <button class=" btn btn-primary " onclick="modalProveedores.showModal()">Agregar Proveedor</button>
+    </div>
+    <div class="flex flex-row justify-around items-center mt-8 ">
+      <form class="form flex flex-col justify-center items-center gap-2 border-2 border-blue-500 bg-gray-100 p-4 rounded-lg">
+        <div class="flex flex-row justify-center items-center gap-4">
+          <div class="flex flex-col justify-center items-center gap-4">
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha" name="fecha" class="input input-primary w-full max-w-xs" [(ngModel)]="compra.fecha" [ngModelOptions]="{standalone: true}">
+          </div>
+          <div class="flex flex-col justify-center items-center gap-4">
+            <label for="proveedor">Proveedor</label>
+            <select id="proveedor" name="proveedor"  class="select select-bordered w-full max-w-xs" [(ngModel)]="compra.proveedor" [ngModelOptions]="{standalone: true}">
+              <option *ngFor="let proveedores of proveedorGet" [value]="proveedores.ID_PROVEEDOR">
+              {{proveedores.NOMBRE_TIENDA}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex flex-col justify-center items-center gap-4">
+          <div class="flex flex-col justify-center items-center gap-4">
+            <label for="articulo">Descripcion de la compra</label>
+            <textarea type="text" id="descripcion" name="descripcion" class="textarea textarea-bordered textarea-primary w-full max-w-xs" [(ngModel)]="compra.descripcion" [ngModelOptions]="{standalone: true}"></textarea>
+          </div>
+          <div class="flex flex-col justify-center items-center gap-4">
+            <label for="cantidad">Monto</label>
+            <input type="number" id="cantidad" name="cantidad" class="input input-primary w-32 max-w-xs" [(ngModel)]="compra.monto" [ngModelOptions]="{standalone: true}">
+          </div>
+        </div>
+
+        <div class="flex flex-row justify-center items-center gap-4">
+          <button class="btn btn-primary" (click)="agregarCompra(compra)">Agregar</button>
+          <button class="btn btn-secondary" (click)="proveedor={}">Cancelar</button>
+        </div>
+      </form>
+      <div class="overflow-x-auto">
+        <div class="flex flex-row justify-center items-center mb-2">
+          <select class="select select-bordered w-full max-w-xs" (change)="getCompra()"  [(ngModel)]="indiceMes"  [ngModelOptions]="{standalone: true}"  >
+            <option [value]="i+1" *ngFor="let mes of meses;let i = index">{{mes}}</option>
+          </select> 
+        </div>
+        <table class="table table-zebra">
+          <!-- head -->
+          <thead class="bg-primary text-white">
+            <tr>
+              <th></th>
+              <th>Tienda</th>
+              <th>Descripción</th>
+              <th>Fecha de Compra</th>
+              <th>Monto</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Utiliza *ngFor para recorrer el arreglo de compras -->
+            <tr *ngFor="let compra of compraGet; let i = index" class="hover">
+              <th>{{ i + 1 }}</th>
+              <td class="font-bold">{{ compra.NOMBRE_TIENDA }}</td>
+              <td class="font-bold">{{ compra.DESCRIPCION }}</td>
+              <!-- Añade la fecha de compra -->
+              <td class="font-bold">{{ compra.FECHA_COMPRA | date }}</td>
+              <td class="font-bold">{{ compra.MONTO | currency:'Q':'symbol':'1.2-2' }}</td>
+             
+            </tr>
+            <tr>
+              <th colspan="4" class="text-center">Total:</th>
+              <td class="font-bold text-2xl">{{ compraTotal | currency:'Q':'symbol':'1.2-2'  }}</td>
+            </tr>
+           
+          </tbody>
+        </table>
+      </div>
+      
+    </div>
+  </div>
+<!-- Open the modal using ID.showModal() method -->
+<dialog id="modalProveedores" class="modal">
+  <div class="modal-box">
+    <div class="max-w-md mx-auto mt-8">
+   
+      <form class="form flex flex-col justify-center items-center" enctype="multipart/form-data">
+        <!-- Nombre del producto -->
+        <div class="mb-4">
+          <label for="Nombre proveedor" class="block text-gray-700 text-sm font-bold mb-2">Nombre del Proveedor:</label>
+          <input type="text" id="nombre proveedor" name="nombre" class="input input-primary w-full max-w-xs" [(ngModel)]="proveedor.nombreProveedor" [ngModelOptions]="{standalone: true}">
+        </div>
+    
+        <!-- Foto -->
+        <div class="mb-4">
+          <label for="nombre tienda" class="block text-gray-700 text-sm font-bold mb-2">Tienda:</label>
+          <input type="text"  class="input input-primary w-full max-w-xs" [(ngModel)]="proveedor.tienda" [ngModelOptions]="{standalone: true}" />
+        </div>
+    
+        <!-- Descripción -->
+        <div class="mb-4">
+          <label for="telefono" class="block text-gray-700 text-sm font-bold mb-2">Telefono:</label>
+          <input id="telefono" name="telefono" class="input input-primary w-full max-w-xs" [(ngModel)]="proveedor.telefono" [ngModelOptions]="{standalone: true}">
+        </div>
+        <div class="mb-4">
+          <label for="telefono" class="block text-gray-700 text-sm font-bold mb-2">Direccion:</label>
+          <input id="telefono" name="telefono" class="input input-primary w-full max-w-xs" [(ngModel)]="proveedor.direccion" [ngModelOptions]="{standalone: true}">
+        </div>
+
+        <div class="flex flex-row justify-between items-center gap-4">
+          <button  class="btn btn-primary" (click)="agregarProveedor(proveedor)">Agregar</button>
+          <button class="btn btn-secondary" onclick="modalProveedores.close()">Cancelar</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+</ion-content>

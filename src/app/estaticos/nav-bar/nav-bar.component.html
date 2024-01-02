@@ -12,7 +12,8 @@
     <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
     <ul class="menu p-4 w-80 min-h-full bg-white text-base-content flex gap-4">
       <!-- Sidebar content here -->
-      <li class="bg-accent rounded-xl"><a  class="h-14">Articulos</a></li>
+      <li class="bg-accent rounded-xl"><a routerLink=""   class="h-14">Inventario</a></li>
+      <li class="bg-accent rounded-xl"><a routerLink="/compras"  class="h-14">Compras</a></li>
       <li class="bg-accent rounded-xl"><a  class="h-14">Registrar</a></li>
       
     </ul>
@@ -24,7 +25,8 @@
 
   
   <button class="btn rounded-2xl btn-sm btn-secondary" *ngIf="home" onclick="AgregarInventario.showModal()">+</button>
-  <button class="btn rounded-2xl btn-sm btn-secondary" *ngIf="home" (click)="getArticulos()">-</button>
+  <button class="btn rounded-2xl btn-sm btn-secondary" *ngIf="home" onclick="AgregarInventario.showModal()">+</button>
+  <!-- <button class="btn rounded-2xl btn-sm btn-secondary" *ngIf="proveedor" (click)="postProveedor()">-</button> -->
 
 
 <!-- <img src="../assets/kimochiiB.JPG" class="w-44"> -->

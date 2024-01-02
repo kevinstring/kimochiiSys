@@ -1,0 +1,104 @@
+<ion-content padding>
+ <ion-header>
+  <p>Hola</p>
+ </ion-header>
+ <div >
+ <div *ngIf="!ventaRegistrada">
+  <div class="flex justify-center">
+    <form class="bg-white rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="fecha">
+          Fecha
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="fecha"
+          type="date"
+          placeholder="Fecha"
+          [(ngModel)]="venta.fecha"
+          [ngModelOptions]="{standalone: true}"
+        />
+      </div>
+  
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="nombreCliente">
+          Nombre del Cliente
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="nombreCliente"
+          type="text"
+          placeholder="Nombre del Cliente"
+          [(ngModel)]="venta.nombreCliente"
+          [ngModelOptions]="{standalone: true}"
+        />
+      </div>
+  
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="tipoPago">
+          Tipo de Pago
+        </label>
+        <select
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="tipoPago"
+          [(ngModel)]="venta.tipoPago"
+          [ngModelOptions]="{standalone: true}"
+        >
+          <option value="efectivo">Efectivo</option>
+          <option value="tarjeta">Tarjeta de Crédito</option>
+          <option value="transferencia">Transferencia Bancaria</option>
+        </select>
+      </div>
+  
+      <div class="mb-4">
+        <input
+          class="mr-2 leading-tight"
+          id="esEnvio"
+          type="checkbox"
+          [(ngModel)]="venta.esEnvio"
+          [ngModelOptions]="{standalone: true}"
+        />
+        <label class="text-gray-700 text-sm font-bold" for="esEnvio">
+          ¿Es envío?
+        </label>
+      </div>
+  
+      <div class="flex items-center justify-between">
+        <button
+        [disabled]="venta.fecha === ''  || venta.tipoPago === ''"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="button"
+          (click)="registrarVenta()"
+        >
+          Registrar y seguir
+          
+        </button>
+      </div>
+    </form>
+  </div>
+  
+ </div>
+ 
+ <div *ngIf="ventaRegistrada" class="flex flex-col justify-center gap-2 ">
+  <div class="flex flex-row justify-center items-center gap-2 flex-wrap">
+      <button class="btn btn-sm btn-primary" *ngFor="let categoria of categorias" (click)="consultaProductos(categoria.ID)">
+      {{categoria.NOMBRE}}</button>
+  </div>
+
+  <div>
+    <div class="flex flex-row justify-center items-center gap-2 flex-wrap h-max">
+      <div class="flex flex-col justify-center items-center indicator" *ngFor="let producto of productos; let i = index"  (click)="agregarProducto(producto,i)">
+        <span class="indicator-item badge badge-primary" >{{producto.cantidadSeleccionada}}</span>
+    
+        <img src="{{producto.FOTO}}" alt="" class="w-40 h-40">
+    
+        <span class="text-sm">{{producto.NOMBRE}}</span>
+        <span class="text-xs">Q{{producto.PRECIO}}</span>
+        <span>Cantidad existente: {{producto.CANTIDAD}}</span>
+      </div>
+    </div>
+    
+  </div>
+</div>
+</div>
+</ion-content>

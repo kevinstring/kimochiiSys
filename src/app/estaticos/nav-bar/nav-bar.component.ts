@@ -21,6 +21,7 @@ export class NavBarComponent implements OnInit  {
   categoriaAnime=false
   categoria:any;
   subCategoria:any;
+  proveedor=false;
   categoriaRopa=false;
   categoriaSeleccionada:any;
   tagsElegidos:any=[]

@@ -12,13 +12,11 @@ import { ModalRegistrarVentaComponent } from '../modal-registrar-venta/modal-reg
   styleUrls: ['./registrar-venta.component.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, ReactiveFormsModule,NavBarComponent],})
-export class RegistrarVentaComponent  implements OnInit {
+export class RegistrarVentaComponent {
 
   constructor(private modalController: ModalController) { }
 
-  ngOnInit() {
-    console.log("HOLA")
-  }
+
 
   modalRegistrarVenta(){
     const modal = this.modalController.create({

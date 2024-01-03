@@ -1,8 +1,11 @@
 <ion-content padding>
- <ion-header>
-  <p>Hola</p>
+ <ion-header *ngIf="arregloProductos.length>=0">
+  <span *ngFor="let contador of arregloContador">
+    {{ contador.codigoProducto }}  <span class="text-green-400"> x{{ contador.cantidadSeleccionada }}, </span>
+  </span>
+  
  </ion-header>
- <div >
+ <div class="relative">
  <div *ngIf="!ventaRegistrada">
   <div class="flex justify-center">
     <form class="bg-white rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
@@ -63,7 +66,7 @@
         </label>
       </div>
   
-      <div class="flex items-center justify-between">
+      <div  class="flex items-center justify-between">
         <button
         [disabled]="venta.fecha === ''  || venta.tipoPago === ''"
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -73,32 +76,44 @@
           Registrar y seguir
           
         </button>
+        <button
+      
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="button"
+          (click)="cancelarVenta()"
+        >
+          Cancelar
+          
+        </button>
       </div>
     </form>
   </div>
   
  </div>
  
- <div *ngIf="ventaRegistrada" class="flex flex-col justify-center gap-2 ">
-  <div class="flex flex-row justify-center items-center gap-2 flex-wrap">
-      <button class="btn btn-sm btn-primary" *ngFor="let categoria of categorias" (click)="consultaProductos(categoria.ID)">
+ <div *ngIf="ventaRegistrada"  class="flex flex-col justify-center gap-2 ">
+  <div class="flex flex-row justify-center items-center gap-2 flex-wrap ">
+      <button class="btn btn-sm btn-primary text-white" *ngFor="let categoria of categorias" (click)="consultaProductos(categoria.ID)">
       {{categoria.NOMBRE}}</button>
   </div>
 
-  <div>
-    <div class="flex flex-row justify-center items-center gap-2 flex-wrap h-max">
-      <div class="flex flex-col justify-center items-center indicator" *ngFor="let producto of productos; let i = index"  (click)="agregarProducto(producto,i)">
-        <span class="indicator-item badge badge-primary" >{{producto.cantidadSeleccionada}}</span>
-    
-        <img src="{{producto.FOTO}}" alt="" class="w-40 h-40">
-    
-        <span class="text-sm">{{producto.NOMBRE}}</span>
-        <span class="text-xs">Q{{producto.PRECIO}}</span>
-        <span>Cantidad existente: {{producto.CANTIDAD}}</span>
-      </div>
+
+    <div class="relative flex flex-row justify-center items-center gap-2 flex-wrap h-max mt-9">
+      <div class="flex flex-col justify-center items-center cursor-pointer"  *ngFor="let producto of productos; let i = index" (click)="agregarProducto(producto, i)">
+          <img src="{{producto.FOTO}}" alt="" class="w-40 h-40">
+          <span class="text-sm">{{producto.NOMBRE}}</span>
+          <span class="text-xs">Q{{producto.PRECIO}}</span>
+          <span>Cantidad existente: {{producto.CANTIDAD}}</span>
+        </div>
+      <button class="btn bg-green-500 text-white btn-sm fixed right-0 bottom-0 z-50" (click)="finalizarVenta()">Finalizar</button>
+      <button class="btn bg-red-700 text-white btn-sm fixed left-0 bottom-0 z-50" (click)="cancelarVentaYFactura()">CANCELAR</button>
+
     </div>
-    
-  </div>
+  
+
+  
 </div>
 </div>
+<p-toast></p-toast>
+
 </ion-content>

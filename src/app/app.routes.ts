@@ -3,9 +3,9 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: 'home',
-    loadComponent:()=>import('./registro-compras/registro-compras.component').then((m)=>m.RegistroComprasComponent)
+    // loadComponent:()=>import('./registro-compras/registro-compras.component').then((m)=>m.RegistroComprasComponent)
 
-    // loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
   },
   {
     path: '',
@@ -25,6 +25,9 @@ export const routes: Routes = [
   {
     path:'ventas',
     loadComponent:()=>import('./registrar-venta/registrar-venta.component').then((m)=>m.RegistrarVentaComponent)
-  }
-
+  },
+  {
+  path:'verVentas',
+  loadComponent:()=>import('./ver-ventas/ver-ventas.component').then((m)=>m.VerVentasComponent)
+}
 ];

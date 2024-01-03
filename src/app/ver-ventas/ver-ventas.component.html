@@ -1,0 +1,29 @@
+<app-nav-bar [home]="false"></app-nav-bar>
+<ion-content class="h-screen">
+  <div class="flex flex-row justify-around items-center gap-6 mt-6 flex-wrap">
+
+    <div role="tablist" class="tabs tabs-lifted">
+      <a role="tab" 
+         *ngFor="let tab of tabs; let i = index" 
+         [ngClass]="{'tab': true, 'tab-active': i === activeTabIndex, 'text-primary': true}" 
+         (click)="setActiveTab(i)">
+         {{ tab }}
+      </a>
+    </div>
+  
+  </div>
+  <div class="h-screen flex flex-row justify-center items-center">
+ 
+      <div *ngIf="activeTabIndex===0">
+        <p>MES</p>
+      </div>
+      <div *ngIf="activeTabIndex===1">
+        <p>SEMANA</p>
+      </div>
+      <div *ngIf="activeTabIndex===2">
+        <p>DIA</p>
+      </div>
+    
+</div>
+
+</ion-content>

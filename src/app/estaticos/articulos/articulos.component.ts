@@ -1,4 +1,4 @@
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule, NgIf, NumberFormatStyle, NumberSymbol, formatNumber, formatPercent } from '@angular/common';
 import { Component, ElementRef, Input, NgModule, OnInit, Output, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -18,7 +18,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   standalone:true,
   providers: [MessageService],
 
-  imports:[IonicModule,CommonModule,ReactiveFormsModule,FormsModule,ToastModule,QRCodeModule]
+  imports:[IonicModule,CommonModule,ReactiveFormsModule,FormsModule,ToastModule,QRCodeModule,]
 })
 export class ArticulosComponent  implements OnInit {
   @ViewChild('ide', { static: true }) qrcElement: ElementRef;

@@ -23,11 +23,12 @@
       </h2>
       <!-- <p>{{producto.DESCRIPCION}}</p> -->
       <div class="flex flex-row justify-center items-center">
-        <p>Costo: {{producto.COSTO}}</p>
-        <p>Precio: {{producto.PRECIO}}</p>
+        <p class="font-bold text-xs">Costo: {{producto.COSTO}}</p>
+        <p class="font-bold text-xs">Precio: {{producto.PRECIO}}</p>
 
       </div>
-      <span>{{producto.CODIGO}}</span>
+      <span class="font-bold text-xs">Codigo: {{producto.CODIGO}}</span>
+      <span class="font-bold text-xs">Porcentaje Ganancia: {{ producto.PORCENTAJE_GANANCIA }}%</span>
     </div>
 
     <div *ngIf="idEdicion===producto.ID_PRODUCTO">

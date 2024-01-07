@@ -19,8 +19,8 @@ import { NavBarComponent } from '../estaticos/nav-bar/nav-bar.component';
   providers: [MessageService],
 })
 export class VerVentasComponent  implements OnInit {
-
-  tabs=["MES","SEMANA","DIA"]
+  granTotal=0
+  tabs=["DIA","SEMANA","MES","AÑO","TODOS"]
   ventas:any=[]
   activeTabIndex = 0; // Inicialmente, la primera pestaña está activa
 
@@ -33,7 +33,9 @@ export class VerVentasComponent  implements OnInit {
     this.servicio.post('getVentas',form).subscribe({
       next:(data:any)=>{
         console.log(data)
-        // this.ventas=data.ventas
+        this.ventas=data.ventas
+        this.granTotal=data.granTotal
+
       },
       error:(err:any)=>{
         console.log(err)
@@ -43,6 +45,6 @@ export class VerVentasComponent  implements OnInit {
   }
   constructor(private servicio:ServicioService,private cdRef: ChangeDetectorRef,private zone: NgZone,private mensaje:MessageService,private modalController:ModalController) { }
 
-  ngOnInit() {console.log("HOLA")}
+  ngOnInit() {this.setActiveTab(0);}
 
 }

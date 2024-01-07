@@ -43,14 +43,21 @@ articulos:any=[]
    }
 
  async ngOnInit() {
-   this.getArticulo()
+this.getArticulo()
    console.log(this.productos)}
-  getArticulo() {
+   getArticulo() {
     this.servicio.get('getProducto').subscribe({
       next: (data: any) => {
+        data.productos.forEach((element: any) => {
+          element.FOTO = this.quitarParteIndeseada(element.FOTO);
+        });
+  
         this.productos = data.productos;
+  
+        console.log(this.productos);
+  
         if (data.ropa) {
-         this.ropa=data.ropa
+          this.ropa = data.ropa;
         }
       },
       error: (err: any) => {
@@ -96,7 +103,11 @@ console.log(producto)
       reader.readAsDataURL(blob);
     });
   }
-  
+
+  quitarParteIndeseada(urlCompleta: string): string {
+    const parteIndeseada = "https://kimochii.s3.amazonaws.com";
+    return urlCompleta.replace(parteIndeseada, '');
+  }
   
   fileChanged(event: any) {
     // Assuming you want to display the selected file path
@@ -224,13 +235,16 @@ console.log(producto)
     this.servicio.post('postFavorito',form).subscribe({next:(data:any)=>{
    
         this.mensaje.add({ severity: 'success', summary: 'Success', detail: data.message });
-  
+
     },
     error:(error)=>{
       console.log(error)
       this.mensaje.add({ severity: 'error', summary: 'Error', detail: 'Message Content' });
-    }
+    },  
+      complete:()=>{
+        this.mensaje.clear()
 
+      }
 
     })
   }

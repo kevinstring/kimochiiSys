@@ -5,9 +5,17 @@
     <div class="flex flex-row justify-center items-center mt-5">
       <button class=" btn btn-primary " onclick="modalProveedores.showModal()">Agregar Proveedor</button>
     </div>
-    <div class="flex flex-row justify-around items-center mt-8 ">
+    <div class="flex flex-row justify-around items-center mt-8 flex-wrap ">
+      <div class="flex flex-col justify-center items-center">
+      <div role="tablist" class="tabs tabs-lifted" >
+        <a role="tab" class="tab" *ngFor="let tiposCompra of tipoCompra; let i = index"  (click)="getTipoCompra(i+1)"
+        [ngClass]="{'tab': true, 'tab-active': i+1 === tipoCompraSeleccionado, 'text-primary': true}" >{{tiposCompra}}</a>
+
+      </div>
       <form class="form flex flex-col justify-center items-center gap-2 border-2 border-blue-500 bg-gray-100 p-4 rounded-lg">
-        <div class="flex flex-row justify-center items-center gap-4">
+
+        <div *ngIf="tipoCompraSeleccionado===1">
+        <div  class="flex flex-row justify-center items-center gap-4">
           <div class="flex flex-col justify-center items-center gap-4">
             <label for="fecha">Fecha</label>
             <input type="date" id="fecha" name="fecha" class="input input-primary w-full max-w-xs" [(ngModel)]="compra.fecha" [ngModelOptions]="{standalone: true}">
@@ -35,14 +43,65 @@
           <button class="btn btn-primary" (click)="agregarCompra(compra)">Agregar</button>
           <button class="btn btn-secondary" (click)="proveedor={}">Cancelar</button>
         </div>
+      </div>
+      <div *ngIf="tipoCompraSeleccionado===2">
+        <form>
+      
+          <div class="flex flex-row justify-center items-center gap-4">
+            <div class="flex flex-col justify-center items-center gap-4">
+              <label for="fecha">Fecha</label>
+              <input type="date" id="fecha" name="fecha" class="input input-primary w-full max-w-xs" [(ngModel)]="compra.fechaInter" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="flex flex-col justify-center items-center gap-4">
+              <label for="fecha">Fecha Estimada de Llegada</label>
+              <input type="date" id="fechal" name="fechal" class="input input-primary w-full max-w-xs" [(ngModel)]="compra.fechaLlegada" [ngModelOptions]="{standalone: true}">
+            </div>
+            <div class="flex flex-col justify-center items-center gap-4">
+              <label for="estado">Estado del pedido</label>
+              <select id="estado" name="estado"  class="select select-bordered w-full max-w-xs" [(ngModel)]="compra.estado" [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let estado of estados" [value]="estado.ID_ESTADO">
+                {{estado.ESTADO}}</option>
+              </select>
+            </div>
+            <div class="flex flex-col justify-center items-center gap-4">
+              <label for="proveedor">Proveedor</label>
+              <select id="proveedor" name="proveedor"  class="select select-bordered w-full max-w-xs" [(ngModel)]="compra.proveedorInterna" [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let proveedores of proveedorInter" [value]="proveedores.ID">
+                {{proveedores.NOMBRE_PROVEEDOR_INTER}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex flex-col justify-center items-center gap-4">
+            <div class="flex flex-col justify-center items-center gap-4">
+              <label for="articulo">Descripcion de la compra</label>
+              <textarea type="text" id="descripcion" name="descripcion" class="textarea textarea-bordered textarea-primary w-full max-w-xs" [(ngModel)]="compra.descripcion" [ngModelOptions]="{standalone: true}"></textarea>
+            </div>
+            <div class="flex flex-col justify-center items-center gap-4">
+              <label for="cantidad">Monto</label>
+              <input type="number" id="cantidad" name="cantidad" class="input input-primary w-32 max-w-xs" [(ngModel)]="compra.monto" [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+  
+          <div class="flex flex-row justify-center items-center gap-4">
+            <button class="btn btn-primary" (click)="agregarCompra(compra)">Agregar</button>
+            <button class="btn btn-secondary" (click)="proveedor={}">Cancelar</button>
+        
+          </div>
+
+
+    </form>
+  </div>
       </form>
-      <div class="overflow-x-auto">
+    </div>
+
+      <div class="overflow-x-auto ">
         <div class="flex flex-row justify-center items-center mb-2">
           <select class="select select-bordered w-full max-w-xs" (change)="getCompra()"  [(ngModel)]="indiceMes"  [ngModelOptions]="{standalone: true}"  >
             <option [value]="i+1" *ngFor="let mes of meses;let i = index">{{mes}}</option>
           </select> 
         </div>
-        <table class="table table-zebra">
+        <div >
+        <table id="pdfContent" class="table table-zebra">
           <!-- head -->
           <thead class="bg-primary text-white">
             <tr>
@@ -57,7 +116,8 @@
             <!-- Utiliza *ngFor para recorrer el arreglo de compras -->
             <tr *ngFor="let compra of compraGet; let i = index" class="hover">
               <th>{{ i + 1 }}</th>
-              <td class="font-bold">{{ compra.NOMBRE_TIENDA }}</td>
+              <td class="font-bold">{{ compra.NOMBRE_TIENDA }}{{compra.NOMBRE_PROVEEDOR_INTER}}</td>
+
               <td class="font-bold">{{ compra.DESCRIPCION }}</td>
               <!-- Añade la fecha de compra -->
               <td class="font-bold">{{ compra.FECHA_COMPRA | date }}</td>
@@ -71,19 +131,46 @@
            
           </tbody>
         </table>
+
       </div>
-      
+      <button (click)="exportToPDF()" class="btn btn-xs btn-primary">Exportar a PDF</button>
+
+      </div>
+
     </div>
   </div>
 <!-- Open the modal using ID.showModal() method -->
 <dialog id="modalProveedores" class="modal">
   <div class="modal-box">
     <div class="max-w-md mx-auto mt-8">
-   
+      <div role="tablist" class="tabs tabs-lifted" >
+        <a role="tab" class="tab" *ngFor="let tiposProveedor of tipoProveedor; let i = index"  (click)="getTipoProveedor(i+1)"
+        [ngClass]="{'tab': true, 'tab-active': i+1 === tipoProveedorSeleccionado, 'text-primary': true}" >{{tiposProveedor}}</a>
+
+      </div>
       <form class="form flex flex-col justify-center items-center" enctype="multipart/form-data">
         <!-- Nombre del producto -->
+        <div  *ngIf="tipoProveedorSeleccionado===2">
         <div class="mb-4">
           <label for="Nombre proveedor" class="block text-gray-700 text-sm font-bold mb-2">Nombre del Proveedor:</label>
+          <input type="text" id="nombre proveedor" name="nombre" class="input input-primary w-full max-w-xs" [(ngModel)]="proveedor.nombreProveedor" [ngModelOptions]="{standalone: true}">
+        </div>
+    
+        <!-- Foto -->
+        <div class="mb-4">
+          <label for="nombre tienda" class="block text-gray-700 text-sm font-bold mb-2">Pagina de pedido:</label>
+          <input type="text"  class="input input-primary w-full max-w-xs" [(ngModel)]="proveedor.tienda" [ngModelOptions]="{standalone: true}" />
+        </div>
+
+
+        <div class="flex flex-row justify-between items-center gap-4">
+          <button  class="btn btn-primary" (click)="agregarProveedor(proveedor)">Agregar</button>
+          <button class="btn btn-secondary" onclick="modalProveedores.close()">Cancelar</button>
+        </div>
+      </div>
+      <div  *ngIf="tipoProveedorSeleccionado===1">
+        <div class="mb-4">
+          <label for="Nombre proveedor" class="block text-gray-700 text-sm font-bold mb-2">Nombre del Proveedore:</label>
           <input type="text" id="nombre proveedor" name="nombre" class="input input-primary w-full max-w-xs" [(ngModel)]="proveedor.nombreProveedor" [ngModelOptions]="{standalone: true}">
         </div>
     
@@ -107,8 +194,9 @@
           <button  class="btn btn-primary" (click)="agregarProveedor(proveedor)">Agregar</button>
           <button class="btn btn-secondary" onclick="modalProveedores.close()">Cancelar</button>
         </div>
-
+      </div>
       </form>
+      
 
     </div>
   </div>

@@ -12,16 +12,78 @@
     </div>
   
   </div>
-  <div class="h-screen flex flex-row justify-center items-center">
- 
+  <div class="h-auto flex flex-col justify-center items-center mt-5">
+    <div>
+      <p class="text-center font-bold text-lg">TOTAL: {{granTotal}}</p>
+    </div>
       <div *ngIf="activeTabIndex===0">
-        <p>MES</p>
+       <table class="table">
+          <thead>
+            <tr>
+              <th>CANTIDAD</th>
+              <th>PRODUCTO</th>
+              <th>TIPO DE PAGO</th>
+              <th>TOTAL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let venta of ventas">
+              <td>{{venta.CANTIDAD}}</td>
+              <td>{{venta.NOMBRE}}</td>
+              <td>{{venta.ID_TIPO_PAGO}}</td>
+              <td>{{venta.TOTAL}}</td>
+              <td>
+                <button class="btn btn-sm btn-primary" >Ver detalles</button>
+              </td>
+            </tr>
+          </tbody>
+       </table>
       </div>
       <div *ngIf="activeTabIndex===1">
-        <p>SEMANA</p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>CANTIDAD</th>
+              <th>PRODUCTO</th>
+              <th>TIPO DE PAGO</th>
+              <th>TOTAL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let venta of ventas">
+              <td>{{venta.CANTIDAD}}</td>
+              <td>{{venta.NOMBRE}}</td>
+              <td>{{venta.ID_TIPO_PAGO}}</td>
+              <td>{{venta.TOTAL}}</td>
+              <td>
+                <button class="btn btn-sm btn-primary" >Ver detalles</button>
+              </td>
+            </tr>
+          </tbody>
+       </table>
       </div>
       <div *ngIf="activeTabIndex===2">
-        <p>DIA</p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>CANTIDAD</th>
+              <th>PRODUCTO</th>
+              <th>TIPO DE PAGO</th>
+              <th>TOTAL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let venta of ventas">
+              <td>{{venta.CANTIDAD}}</td>
+              <td>{{venta.NOMBRE}}</td>
+              <td>{{venta.ID_TIPO_PAGO}}</td>
+              <td>{{venta.TOTAL}}</td>
+              <td>
+                <button class="btn btn-sm btn-primary" >Ver detalles</button>
+              </td>
+            </tr>
+          </tbody>
+       </table>
       </div>
     
 </div>

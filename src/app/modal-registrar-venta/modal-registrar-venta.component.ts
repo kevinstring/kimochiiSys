@@ -20,12 +20,15 @@ import { ModalController } from '@ionic/angular/standalone';
 })
 export class ModalRegistrarVentaComponent  implements OnInit {
   ventaRegistrada=false
+  esRopa=  false
+  ropa:any=[]
   loading=false
   categorias:any=[]
   venta:any={}
   ventaRealizada:any
   productos:any=[]
   productoVenta:any={}
+  
   arregloProductos:any=[{cantidadSeleccionada:0}]
   arregloContador:any=[{codigoProducto:' ',cantidadSeleccionada:0}]
   indice:any
@@ -41,6 +44,24 @@ export class ModalRegistrarVentaComponent  implements OnInit {
     this.modalController.dismiss()
     console.log("HOLA")
   }
+
+  cambiarEstadoRopa(){
+
+     this.esRopa=true
+     this.servicio.get('getRopa').subscribe({
+      next:(data:any)=>{
+        this.productos=data.ropa
+        this.ropa=data.ropa.map((element:any)=>{
+          return element.TALLAS
+        })
+        console.log( this.ropa)
+      },
+      error:(err:any)=>{
+        console.log(err)
+      }
+     })
+    }
+     
 
   registrarVenta(){
     this.loading=true
@@ -90,7 +111,10 @@ getProductosEnStock(){
   })
 }
 
+
+
 consultaProductos(idcategoria:any){
+  this.esRopa=false
   this.categoriaElegida=idcategoria
   let form = new FormData()
   form.append('idcategoria',idcategoria)
@@ -169,13 +193,20 @@ objectValues(obj: any) {
   return Object.values(obj) as Array<{ codigoProducto: string, cantidadSeleccionada: number }>;
 }
 
-agregarProducto(producto: any, i: any) {
+
+
+agregarProducto(producto: any, i: any,talla:any) {
+  console.log(talla)
   if (producto.CANTIDAD == 0) {
     this.mensaje.add({ severity: 'error', summary: 'Error', detail: 'No hay stock de este producto' });
     return;
   }
-
   const form = new FormData();
+
+  if(talla!=="N"){
+    form.append('talla',talla)
+  }
+
   form.append('codigoProducto', producto.CODIGO);
   form.append('idVenta', this.ventaRealizada);
 

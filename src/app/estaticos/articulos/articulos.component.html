@@ -10,7 +10,7 @@
  <div class="flex flex-row justify-center flex-wrap gap-7 items-center mt-8" *ngIf="!verRopa" >
   <div class="card w-64 bg-base-100 shadow-xl" *ngFor="let producto of productos;let id = index " >
    
-    <figure *ngIf="!editar || idEdicion!==producto.ID_PRODUCTO"><img [src]="producto.FOTO" alt="Shoes" /></figure>
+    <figure *ngIf="!editar || idEdicion!==producto.ID_PRODUCTO"><img [src]="'https://kimochii-489509929.imgix.net/'+producto.FOTO+'?&w=200&h=200'" alt="Shoes" /></figure>
     <div class="card-body" *ngIf="!editar || idEdicion!==producto.ID_PRODUCTO;">
       <div class="card-actions  justify-center">
         <div class="badge badge-outline">{{producto.NOMBRE_CATEGORIA}}</div> 
@@ -37,7 +37,7 @@
 
       <input type="file" class="file-input file-input-sm file-input-primary " (change)="fileChanged($event)" [(ngModel)]="productoEditado.imagen">
       
-      <figure><img [src]="productoEditado.imagen || ''" class="object-cover w-52"></figure>
+      <figure><img [src]="'http://pimini.imgix.net/'+producto.FOTO+'?fit=crop&w=100&h=100'" class="object-cover w-52"></figure>
       <div class="card-actions justify-center">
         <div class="flex flex-col justify-center items-center gap-1">
         <span class="text-xs text-slate-500">Categoria</span>
@@ -94,7 +94,7 @@
  <div class="flex flex-row justify-center flex-wrap gap-7 items-center mt-8" *ngIf="verRopa" >
   <div class="card w-64 bg-base-100 shadow-xl" *ngFor="let producto of ropa;let id = index " >
    
-    <figure *ngIf="!editar || idEdicion!==producto.ID_PRODUCTO"><img [src]="producto.FOTO" alt="Shoes" /></figure>
+    <figure *ngIf="!editar || idEdicion!==producto.ID_PRODUCTO"><img [src]="'http://pimini.imgix.net/'+producto.FOTO+'?fit=crop&w=100&h=100'" alt="Shoes" /></figure>
     <div class="card-body" *ngIf="!editar || idEdicion!==producto.ID_PRODUCTO;">
       <div class="card-actions  justify-center">
         <div class="badge badge-outline">{{producto.NOMBRE_CATEGORIA}}</div> 
@@ -127,7 +127,7 @@
 
       <input type="file" class="file-input file-input-sm file-input-primary " (change)="fileChanged($event)" [(ngModel)]="productoEditado.imagen">
       
-      <figure><img [src]="productoEditado.imagen || ''" class="object-cover w-52"></figure>
+      <figure><img [src]="'http://pimini.imgix.net/'+producto.FOTO+'?fit=crop&w=100&h=100'" ></figure>
       <div class="card-actions justify-center">
         <div class="flex flex-col justify-center items-center gap-1">
         <span class="text-xs text-slate-500">Categoria</span>

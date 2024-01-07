@@ -1,0 +1,156 @@
+<app-nav-bar [home]="false"></app-nav-bar>
+<ion-content  class="h-screen">
+  <div class="flex flex-col justify-center items-center mt-8">
+    <div role="tablist" class="tabs tabs-lifted">
+      <a role="tab" class="tab" *ngFor="let tipoPedido of estadoPedido;let i = index" (click)="getEstadoPedido(i+1)"
+      [ngClass]="{'tab': true, 'tab-active': i+1 === estadoSeleccionado, 'text-primary': true}" >{{tipoPedido.estado }} ({{tipoPedido.cantidad }})</a>
+
+    </div>
+
+
+      <div class="h-min mt-10 bg-slate-100 w-full flex flex-row justify-center items-center flex-wrap gap-8 p-4">
+        <div *ngFor="let pedido of pedidos" class="max-w-72 rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+      
+          <div class="p-6">
+            <h6 class="mb-4 block font-sans text-lg font-semibold uppercase leading-relaxed tracking-normal text-pink-500 antialiased">
+              {{pedido.NOMBRE_PROVEEDOR_INTER}}
+            </h6>
+            <h4 class="block font-sans text-lg font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+              Fecha estimada:  {{pedido.FECHA_ESTIMADA_LLEGADA}}
+            </h4>
+            <p class="mb-8 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased">
+              Descripcion: {{pedido.DESCRIPCION}}
+            </p>
+            <span *ngIf="pedido.ID_ESTADO===5" class="font-bold text-xs text-red-600">DIAS RETRASADO: {{pedido.dias_retrasados}}</span>
+
+      <ol class="flex items-center justify-center ">
+        <li [ngClass]="{
+          'flex': true,
+          'w-full': true,
+          'items-center': true,
+          'text-blue-600': pedido.ID_ESTADO === 1 || pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4, 
+          'dark:text-blue-500': pedido.ID_ESTADO === 1 || pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:content-\'\'': pedido.ID_ESTADO === 1 || pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:w-full': pedido.ID_ESTADO === 1 || pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:h-1': pedido.ID_ESTADO === 1 || pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:border-b': pedido.ID_ESTADO === 1 || pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:border-blue-100': pedido.ID_ESTADO === 1 || pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:border-4': pedido.ID_ESTADO === 1 || pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:inline-block': pedido.ID_ESTADO === 1 || pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'dark:after:border-blue-800': pedido.ID_ESTADO === 1 || pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4
+        }">
+          <span class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-12 lg:w-12 dark:bg-blue-800 shrink-0">
+            <i class="fa-solid fa-file-signature"></i>
+          </span>
+        </li>
+        
+        
+        <li  [ngClass]="{
+          'flex': true,
+          'w-full': true,
+          'items-center': true,
+          'text-blue-600': pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'dark:text-blue-500': pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:content-\'\'': pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:w-full': pedido.ID_ESTADO ===2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:h-1': pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:border-b': pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:border-blue-100': pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:border-4': pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:inline-block': pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'dark:after:border-blue-800': pedido.ID_ESTADO === 2 || pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4
+        }">
+<span [ngClass]="{'bg-blue-100': pedido.ID_ESTADO === 2 || pedido.ID_ESTADO===3 || pedido.ID_ESTADO===4, 'bg-gray-100': pedido.ID_ESTADO !== 2}" class="flex items-center justify-center w-10 h-10 rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
+  <i class="fa-solid fa-ferry"></i>
+            </span>
+        </li>
+        <li [ngClass]="{
+          'flex': true,
+          'w-full': true,
+          'items-center': true,
+          'text-blue-600': pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'dark:text-blue-500': pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:content-\'\'':  pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:w-full':  pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:h-1': pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:border-b': pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:border-blue-100':  pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:border-4': pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'after:inline-block':  pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4,
+          'dark:after:border-blue-800':  pedido.ID_ESTADO === 3 || pedido.ID_ESTADO === 4
+        }">
+            <span [ngClass]="{'bg-blue-100': pedido.ID_ESTADO === 3 || pedido.ID_ESTADO===4, 'bg-gray-100': pedido.ID_ESTADO !== 3}" class="flex items-center justify-center w-10 h-10  rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
+              <i class="fa-solid fa-map-location-dot"></i>
+            </span>
+        </li>
+        <li [ngClass]="{
+          'flex': true,
+          'w-full': true,
+          'items-center': true,
+          'text-blue-600': pedido.ID_ESTADO === 4,
+          'dark:text-blue-500':pedido.ID_ESTADO === 4,
+          'after:content-\'\'': pedido.ID_ESTADO === 4,
+          'after:w-full': pedido.ID_ESTADO === 4,
+          'after:h-1':pedido.ID_ESTADO === 4,
+          'after:border-b': pedido.ID_ESTADO === 4,
+          'after:border-blue-100':  pedido.ID_ESTADO === 4,
+          'after:border-4': pedido.ID_ESTADO === 4,
+          'after:inline-block':  pedido.ID_ESTADO === 4,
+          'dark:after:border-blue-800':  pedido.ID_ESTADO === 4
+        }">
+          <span [ngClass]="{'bg-blue-100': pedido.ID_ESTADO === 4, 'bg-gray-100': pedido.ID_ESTADO !== 4}"  class="flex items-center justify-center w-10 h-10  rounded-full lg:h-12 lg:w-12 dark:bg-gray-700 shrink-0">
+            <i class="fa-solid fa-check"></i>
+          </span>
+      </li>
+    </ol>
+    <div class="flex flex-row justify-center mt-7 items-center gap-2">
+
+      <div class="lg:tooltip tooltip-primary" data-tip="Realizar observacion">
+        <button *ngIf="pedido.ID_ESTADO!==4" class="btn btn-circle  btn-xs bg-yellow-400 font-bold" (click)="pedidoAtrasado(pedido)"><i class="fa-solid fa-hourglass-end"></i>
+         
+      </button>
+    </div>
+    <div class="lg:tooltip" data-tip="Regresar Estado">
+
+      <button class="btn btn-circle  btn-xs bg-red-400 " *ngIf="pedido.ID_ESTADO!==1 && pedido.ID_ESTADO!==4" (click)="retrasarEstado(pedido)"><i class="fa-solid fa-left-long"></i></button>
+      </div>
+      <div class="lg:tooltip tooltip-primary" data-tip="Cambiar Estado">
+
+      <button class="btn  btn-circle btn-xs bg-green-400 " *ngIf="pedido.ID_ESTADO!==4" (click)="cambiarEstado(pedido)"><i class="fa-solid fa-right-long"></i></button>
+  </div>
+
+    </div>
+    <p *ngIf="pedido.ID_ESTADO===4" class="font-bold text-primary text-sm text-center">
+      Recibido!
+    </p>
+    <button [disabled]="pedido.valoracion" *ngIf="pedido.ID_ESTADO===4" class="bg-green-600 text-white btn btn-sm" onclick="modalValorar.showModal()" (click)="getSatisfaccion(pedido)"><span *ngIf="pedido.valoracion===true">Valorado</span>
+      <span *ngIf="pedido.valoracion===false">Valorar</span></button>
+    </div>
+  </div>
+
+</div>
+
+    </div>
+
+
+</ion-content>
+<!-- Open the modal using ID.showModal() method -->
+<dialog id="modalValorar" class="modal">
+  <div class="modal-box">
+    <div class="flex flex-col justify-center items-center gap-3">
+    <h3 class="font-bold text-lg"> Valorar para futuras compras con el proveedor: </h3>
+    <div class="rating">
+      <input *ngFor="let estrellas of satisfaccion" type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" (click)="obtenerValoracion(estrellas)" checked   />
+
+    </div>
+    <div class="flex flex-col">
+      <span>Observaciones</span>
+      <textarea class="textarea textarea-primary " [(ngModel)]="observaciones"></textarea>
+    </div>
+  </div>
+  <button class="btn btn-primary btn-sm"  (click)="valorar()">Valorar</button>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>

@@ -29,5 +29,9 @@ export const routes: Routes = [
   {
   path:'verVentas',
   loadComponent:()=>import('./ver-ventas/ver-ventas.component').then((m)=>m.VerVentasComponent)
+},
+{
+  path:'pedidos',
+  loadComponent:()=>import('./pedidos/pedidos.component').then((m)=>m.PedidosComponent)
 }
 ];

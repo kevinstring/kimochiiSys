@@ -1,11 +1,15 @@
 import { CommonModule, JsonPipe } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { IonContent, IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { ServicioService } from 'src/app/servicio.service';
+import { ChangeDetectorRef } from '@angular/core';
+import {  NavigationEnd } from '@angular/router';
+import { NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-nav-bar',
@@ -14,11 +18,13 @@ import { ServicioService } from 'src/app/servicio.service';
   standalone:true,
   providers: [MessageService],
 
-  imports:[IonicModule,CommonModule,ReactiveFormsModule,FormsModule,ToastModule]
+  imports:[IonicModule,CommonModule,ReactiveFormsModule,FormsModule,ToastModule,RouterModule]
 })
 export class NavBarComponent implements OnInit  {
   titulo="Kimochii"
   categoriaAnime=false
+  drawerOpen = false;
+
   categoria:any;
   subCategoria:any;
   proveedor=false;
@@ -42,7 +48,7 @@ categorias:any=[
 subcategoriasRef:any=[]
 indiceCategoria=0;
 
-@Input() home=false;
+@Input() home=true;
 ngOnInit(): void {
 this.getCategorias()
 this.nuevoProducto.personaje=""
@@ -50,8 +56,26 @@ this.nuevoProducto.personaje=""
 
 }
 
-  constructor(private modalController:ModalController,private servicio:ServicioService,private mensaje:MessageService) { }
- 
+  constructor(private ngZone: NgZone,private modalController:ModalController,private servicio:ServicioService,private mensaje:MessageService,private router: Router,private cdr: ChangeDetectorRef) {
+    this.subscribeToRouterEvents();
+   }
+   private subscribeToRouterEvents() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Cerrar el drawer cuando la ruta cambia
+        this.drawerOpen = false;
+      }
+    });
+  }
+  toggleDrawer() {
+    this.drawerOpen = !this.drawerOpen;
+    console.log(this.drawerOpen)
+  }
+  navegarAAlgunLugar() {
+    // Lógica para navegar a algún lugar
+    this.router.navigate(['/compras']);
+  }
+
   onFileChanged(event: any) {
     const file: File = event.target.files[0];
   

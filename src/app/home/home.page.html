@@ -24,6 +24,12 @@
           <form class="form flex flex-col justify-center items-center" *ngIf="indiceCategoria===0" enctype="multipart/form-data">
             <!-- Nombre del producto -->
             <div class="mb-4">
+              <div class="form-control">
+                <label class="cursor-pointer label">
+                  <span class="label-text">Es ropa</span>
+                  <input type="checkbox" class="checkbox checkbox-info" (change)="esRopa()" />
+                </label>
+              </div>
               <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre del Producto:</label>
               <input type="text" id="nombre" name="nombre" class="input input-primary w-full max-w-xs" [(ngModel)]="nuevoProducto.nombre" [ngModelOptions]="{standalone: true}">
             </div>
@@ -108,7 +114,7 @@
             <!-- Botón de Enviar -->
             <div class="mt-6 flex flex-row justify-center items-center gap-5">
     
-              <button type="button" class="bg-blue-500 text-white rounded-md btn-md" (click)="guardarProducto(nuevoProducto,'1')">Guardar y mantener Categoria</button>
+              <button type="button" class="bg-blue-500 text-white rounded-md btn-md" (click)="guardarProducto(nuevoProducto,'1')">Guardar y mantener ihegoria</button>
               <button type="button" class="bg-primary text-white rounded-md btn-md text-center" (click)="guardarProducto(nuevoProducto,'2')" onclick="AgregarInventario.close()">Guardar y Cerrar</button>
   
               <button  class="bg-red-600 text-white rounded-md btn-md" onclick="AgregarInventario.close()" (click)="guardarProducto(nuevoProducto,'3')">Cerrar</button>

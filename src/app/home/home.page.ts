@@ -155,6 +155,7 @@ this.nuevoProducto.personaje=""
       form.append('tallaS',producto.tallaS)
       form.append('tallaM',producto.tallaM)
       form.append('tallaL',producto.tallaL)
+      form.append('esRopa',this.categoriaRopa.toString())
 
       //llamar al servicio y postear el producto y Mantener la categora.
       this.servicio.post('guardarProducto',form).subscribe(({next:(data:any)=>{
@@ -186,6 +187,9 @@ this.nuevoProducto.personaje=""
       
  
     }
+  }
+  esRopa(){
+    this.categoriaRopa=!this.categoriaRopa
   }
   getSubCategorias(ref){
     this.servicio.post('getSubCategorias',{ref:ref}).subscribe(({next:(data:any)=>{

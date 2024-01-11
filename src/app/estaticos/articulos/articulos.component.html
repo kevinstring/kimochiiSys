@@ -8,9 +8,24 @@
   </div>
  </div>
  <div class="flex flex-row justify-center flex-wrap gap-7 items-center mt-8" *ngIf="!verRopa" >
-  <div class="card w-64 bg-base-100 shadow-xl" *ngFor="let producto of productos;let id = index " >
+  <div class="card w-64 bg-base-100 shadow-xl " *ngFor="let producto of productos;let id = index " >
+   <div >
+    <!-- <figure *ngIf="!editar || idEdicion!==producto.ID_PRODUCTO "><img [src]="'https://kimochii-489509929.imgix.net/'+foto+'?&w=200&h=200'" alt="Shoes" /></figure> -->
+    
+    <ng-image-slider 
    
-    <figure *ngIf="!editar || idEdicion!==producto.ID_PRODUCTO"><img [src]="'https://kimochii-489509929.imgix.net/'+producto.FOTO+'?&w=200&h=200'" alt="Shoes" /></figure>
+   [manageImageRatio]="true"
+      [showArrow]="true"
+    [imageSize]="{width: 270, height: 200, space: 2}"
+      [imagePopup]="true"
+
+      [slideImage]="true"
+
+      [animationSpeed]="0.6"
+      [images]="producto.FOTO"
+      style="display: flex; justify-content: center; align-items: center;"
+      ></ng-image-slider>
+  </div>
     <div class="card-body" *ngIf="!editar || idEdicion!==producto.ID_PRODUCTO;">
       <div class="card-actions  justify-center">
         <div class="badge badge-outline">{{producto.NOMBRE_CATEGORIA}}</div> 

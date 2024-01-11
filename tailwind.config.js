@@ -1,6 +1,8 @@
+
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [   "./src/**/*.{html,ts}",],
+
+module.exports =  {
+  content: [   "./src/**/*.{html,ts}",  'node_modules/preline/dist/*.js',],
   theme: {
     
     extend: {},
@@ -31,6 +33,6 @@ module.exports = {
       },
     ],
   },
-  plugins: [require("daisyui")],
+  plugins: [require("daisyui"),     require('preline/plugin'),],
 }
 

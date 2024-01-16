@@ -49,7 +49,7 @@ this.getArticulo()
     this.servicio.get('getProducto').subscribe({
       next: (data: any) => {
         data.productos.forEach((element: any) => {
-          element.FOTO = this.quitarParteIndeseada(element.FOTO);
+          // element.FOTO = this.quitarParteIndeseada(element.FOTO);
         });
   
         this.productos = data.productos;

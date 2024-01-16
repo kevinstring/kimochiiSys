@@ -12,6 +12,23 @@
     </div>
   
   </div>
+  <div #containerRef class="flex flex-row justify-center items-center">
+  <ngx-charts-line-chart
+  [view]="[containerRef.offsetWidth, containerRef.offsetHeight]"
+  [scheme]="colorScheme"
+  [legend]="legend"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxis]="xAxis"
+  [yAxis]="yAxis"
+  [timeline]="timeline"
+  [results]="multi"
+  (select)="onSelect($event)"
+  (activate)="onActivate($event)"
+  (deactivate)="onDeactivate($event)"
+>
+</ngx-charts-line-chart>
+</div>
   <div class="h-auto flex flex-col justify-center items-center mt-5">
     <div>
       <p class="text-center font-bold text-lg">TOTAL: {{granTotal}}</p>

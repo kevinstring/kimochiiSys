@@ -47,6 +47,8 @@ export class ModalRegistrarVentaComponent  implements OnInit {
 
   cambiarEstadoRopa(){
 
+
+
      this.esRopa=true
      this.servicio.get('getRopa').subscribe({
       next:(data:any)=>{
@@ -111,6 +113,19 @@ getProductosEnStock(){
   })
 }
 
+convertirCadenaAArray(cadena: string): string[] {
+  try {
+    const array = JSON.parse(cadena);
+    if (Array.isArray(array)) {
+      return array;
+    }
+  } catch (error) {
+    console.error('Error al convertir la cadena a un array:', error);
+  }
+  return [];
+}
+
+
 
 
 consultaProductos(idcategoria:any){
@@ -121,6 +136,13 @@ consultaProductos(idcategoria:any){
   this.servicio.post('getProductosEnStock',form).subscribe({
     next:(data:any)=>{
       this.productos=data.productos
+
+      this.productos.forEach((element:any) => {
+        console.log()
+      }
+      );
+      console.log(this.productos)
+
       console.log(data)
       console.log(this.ventaRealizada)
     },  

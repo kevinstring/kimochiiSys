@@ -9,6 +9,7 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { jsPDF } from 'jspdf'
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { NgImageSliderModule } from 'ng-image-slider';
 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
@@ -18,13 +19,14 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   standalone:true,
   providers: [MessageService],
 
-  imports:[IonicModule,CommonModule,ReactiveFormsModule,FormsModule,ToastModule,QRCodeModule,]
+  imports:[IonicModule,CommonModule,ReactiveFormsModule,FormsModule,ToastModule,QRCodeModule, NgImageSliderModule]
 })
 export class ArticulosComponent  implements OnInit {
   @ViewChild('ide', { static: true }) qrcElement: ElementRef;
 
 @Input() productos:any=[]
-@Input() ropa:any=[]
+@Input() ropa:any= []
+
 idEdicion:any
 hola="hola"
 verRopa=false
@@ -45,14 +47,35 @@ articulos:any=[]
  async ngOnInit() {
 this.getArticulo()
    console.log(this.productos)}
+
    getArticulo() {
     this.servicio.get('getProducto').subscribe({
       next: (data: any) => {
+<<<<<<< HEAD
         data.productos.forEach((element: any) => {
           // element.FOTO = this.quitarParteIndeseada(element.FOTO);
+=======
+        // Utiliza map para construir un nuevo array de productos
+        this.productos = data.productos.map((element: any) => {
+          // Realiza la modificación de imágenes según el tipo
+          if (Array.isArray(element.FOTO)) {
+            // Utiliza map para construir un nuevo array de imágenes
+            const nuevasImagenes = element.FOTO.map((imagen: any) => {
+              return { image: this.agregarParametrosImagen(imagen.image),
+              thumbImage: this.agregarParametrosImagen(imagen.thumbImage),
+             alt: imagen.alt
+             };
+            });
+           
+            // Asigna el nuevo array de imágenes al elemento
+            return { ...element, FOTO: nuevasImagenes };
+          } else if (typeof element.FOTO === 'string') {
+            return { ...element, FOTO: this.agregarParametrosImagen(element.FOTO) };
+          }
+          // Si el tipo no es array ni string, devuelve el elemento sin cambios
+          return element;
+>>>>>>> 882ccc57c0aab59e5e31132f5f4a4136a88787b0
         });
-  
-        this.productos = data.productos;
   
         console.log(this.productos);
   
@@ -65,6 +88,8 @@ this.getArticulo()
       }
     });
   }
+  
+  
   elegirCategoria(id:any){
   this.indiceCategoria=id;
   if(id==1){
@@ -104,10 +129,13 @@ console.log(producto)
     });
   }
 
-  quitarParteIndeseada(urlCompleta: string): string {
+  agregarParametrosImagen(urlCompleta: string): string {
     const parteIndeseada = "https://kimochii.s3.amazonaws.com";
-    return urlCompleta.replace(parteIndeseada, '');
+    const urlSinParteIndeseada = urlCompleta.replace(parteIndeseada, '');
+    return `https://kimochii-489509929.imgix.net${urlSinParteIndeseada}?h=500&w=600`;
   }
+  
+  
   
   fileChanged(event: any) {
     // Assuming you want to display the selected file path

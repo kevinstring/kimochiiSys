@@ -3,7 +3,7 @@
     <app-nav-bar ></app-nav-bar>
   
     <div class="flex flex-row justify-center items-center mt-2">
-    <button class="btn rounded-2xl btn-sm btn-secondary"  onclick="AgregarInventario.showModal()">Agregar Producto/categoria</button>
+    <button class="btn rounded-2xl btn-sm btn-secondary" (click)="getProveedores()"  onclick="AgregarInventario.showModal()">Agregar Producto/categoria</button>
     <!-- <button class="btn rounded-2xl btn-sm btn-secondary" *ngIf="proveedor" (click)="postProveedor()">-</button> -->
 </div>
   
@@ -32,7 +32,12 @@
               </div>
               <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">Nombre del Producto:</label>
               <input type="text" id="nombre" name="nombre" class="input input-primary w-full max-w-xs" [(ngModel)]="nuevoProducto.nombre" [ngModelOptions]="{standalone: true}">
+              <label for="nombre" class="block text-gray-700 text-sm font-bold mb-2">Proveedor</label>
+              <select type="text" id="nombre" name="nombre" class="input input-primary w-full max-w-xs" [(ngModel)]="nuevoProducto.proveedor" [ngModelOptions]="{standalone: true}">
+                        <option *ngFor="let proveedor of proveedores" [value]="proveedor.ID">{{proveedor.NOMBRE_PROVEEDOR_INTER}}</option>
+            </select>
             </div>
+            
         
             <!-- Foto -->
             <div class="mb-4">

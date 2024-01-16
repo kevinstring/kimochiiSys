@@ -48,5 +48,11 @@
     z-index: 1;
 
 }
-
+/* En tu archivo de estilos (por ejemplo, styles.css) */
+.centrar-contenido {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
 

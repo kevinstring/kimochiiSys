@@ -24,7 +24,7 @@ export class HomePage implements OnInit {
   titulo="Kimochii"
   categoriaAnime=false
   drawerOpen = false;
-
+  fotos:any=[]
   categoria:any;
   subCategoria:any;
   proveedor=false;
@@ -34,6 +34,7 @@ export class HomePage implements OnInit {
   nuevoProducto:any={
 
   }
+  proveedores:any=[]
   asignarSubcat:any={}
   
 secciones:any=[
@@ -76,6 +77,20 @@ this.nuevoProducto.personaje=""
     this.router.navigate(['/compras']);
   }
 
+
+  getProveedores(){
+    this.servicio.get('getProveedoresInter').subscribe({next:(data:any)=>{
+      console.log(data)
+      this.proveedores=data.proveedores
+      // this.mensaje.add({severity:'success',summary:'Exito',detail:'Se han obtenido los proveedores'})
+    },
+    error:(err:any)=>{
+      console.log(err)
+    }
+
+    })
+    }
+
   onFileChanged(event: any) {
     const file: File = event.target.files[0];
   
@@ -85,7 +100,8 @@ this.nuevoProducto.personaje=""
       formData.append('foto', file);
   
       this.servicio.post('updateAmazon', formData).subscribe(({next:(data:any)=>{        if(data.success){
-            this.nuevoProducto.foto=data.url;
+           
+           this.fotos.push(data.url)
             this.mensaje.add({severity:'success',summary:'Listo!',detail:data.message})
         }
       },
@@ -144,7 +160,7 @@ this.nuevoProducto.personaje=""
     if(ref==='1'){
       let form = new FormData()
       form.append('nombre',producto.nombre)
-      form.append('foto',producto.foto)
+      form.append('foto', JSON.stringify(this.fotos))
       form.append('descripcion',producto.descripcion)
       form.append('categoria',producto.categoria)
       form.append('tags',JSON.stringify(producto.tags))
@@ -156,16 +172,17 @@ this.nuevoProducto.personaje=""
       form.append('tallaM',producto.tallaM)
       form.append('tallaL',producto.tallaL)
       form.append('esRopa',this.categoriaRopa.toString())
+      form.append('proveedor',producto.proveedor)
 
       //llamar al servicio y postear el producto y Mantener la categora.
       this.servicio.post('guardarProducto',form).subscribe(({next:(data:any)=>{
         if(data.success){
           this.mensaje.add({ severity: 'success', summary: 'Listo!', detail: data.message })
-
+          this.fotos=[]
         }
       },error:(err:any)=>{
         this.mensaje.add({ severity: 'error', summary: 'Ups!', detail:err.message })
-
+          this.fotos=[]
       }}))
       // this.nuevoProducto={}
       this.nuevoProducto.categoria=producto.categoria

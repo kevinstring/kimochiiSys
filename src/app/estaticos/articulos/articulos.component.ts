@@ -51,10 +51,10 @@ this.getArticulo()
    getArticulo() {
     this.servicio.get('getProducto').subscribe({
       next: (data: any) => {
-<<<<<<< HEAD
+
         data.productos.forEach((element: any) => {
           // element.FOTO = this.quitarParteIndeseada(element.FOTO);
-=======
+
         // Utiliza map para construir un nuevo array de productos
         this.productos = data.productos.map((element: any) => {
           // Realiza la modificación de imágenes según el tipo
@@ -74,8 +74,10 @@ this.getArticulo()
           }
           // Si el tipo no es array ni string, devuelve el elemento sin cambios
           return element;
->>>>>>> 882ccc57c0aab59e5e31132f5f4a4136a88787b0
+
         });
+        }
+        )
   
         console.log(this.productos);
   
@@ -87,6 +89,7 @@ this.getArticulo()
         console.log(err);
       }
     });
+
   }
   
   

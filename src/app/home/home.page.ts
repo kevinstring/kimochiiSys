@@ -34,8 +34,13 @@ export class HomePage implements OnInit {
   nuevoProducto:any={
 
   }
+  animes:any=[]
+  personajes:any=[]
   proveedores:any=[]
   asignarSubcat:any={}
+  anime:any
+  idAnime:any
+  personaje:any
   
 secciones:any=[
   {TAB:"Producto"},
@@ -173,6 +178,7 @@ this.nuevoProducto.personaje=""
       form.append('tallaL',producto.tallaL)
       form.append('esRopa',this.categoriaRopa.toString())
       form.append('proveedor',producto.proveedor)
+      form.append('personaje',producto.personaje)
 
       //llamar al servicio y postear el producto y Mantener la categora.
       this.servicio.post('guardarProducto',form).subscribe(({next:(data:any)=>{
@@ -289,6 +295,8 @@ this.nuevoProducto.personaje=""
       if(true){
         this.tags=data.tags
         this.categorias=data.categoria
+        this.animes=data.animes
+        this.personajes=data.personajes
 
         console.log(data)
       }
@@ -298,6 +306,48 @@ this.nuevoProducto.personaje=""
   }}))
   }
 
+  ingresarAnime(){
+    let form = new FormData()
+    form.append('nombre',this.anime)
+
+    this.servicio.post('postAnime',form).subscribe(({next:(data:any)=>{
+      if(true){
+        this.mensaje.add({ severity: 'success', summary: 'Listo!', detail: 'Se ha creado el anime exitosamente' })
+        this.anime=""
+        this.getCategorias()
+      }
+    },
+  error:(err:any)=>{
+    this.mensaje.add({ severity: 'error', summary: 'ups!', detail: err.error.error })
+
+  }
+  }))
+  }
+  asignarAnime(id){
+    console.log(id)
+    this.idAnime=id
+  }
+
+  ingresarPersonaje(){
+    let form = new FormData()
+    form.append('nombre',this.personaje)
+    form.append('anime',this.idAnime)
+
+    this.servicio.post('postPersonaje',form).subscribe(({next:(data:any)=>{
+      if(true){
+        this.mensaje.add({ severity: 'success', summary: 'Listo!', detail: 'Se ha creado el personaje exitosamente' })
+        this.personaje=""
+        this.getCategorias()
+      }
+    },
+  error:(err:any)=>{
+    this.mensaje.add({ severity: 'error', summary: 'ups!', detail: err.error.error })
+
+  }
+  }))
+    
+
+  }
 
 
 }

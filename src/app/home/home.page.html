@@ -50,6 +50,10 @@
               <label for="descripcion" class="block text-gray-700 text-sm font-bold mb-2">Descripción:</label>
               <textarea id="descripcion" name="descripcion" class="input input-primary w-full max-w-xs" [(ngModel)]="nuevoProducto.descripcion" [ngModelOptions]="{standalone: true}"></textarea>
             </div>
+            <label for="personaje" class="block text-gray-700 text-sm font-bold mb-2">Personaje <span class="text-xs"> (dejar en blanco si no es personaje)</span></label>
+            <select type="text" id="personaje" name="personaje" class="input input-primary w-full max-w-xs" [(ngModel)]="nuevoProducto.personaje" [ngModelOptions]="{standalone: true}">
+                      <option *ngFor="let personaje of personajes" [value]="personaje.ID_PERSONAJE">{{personaje.NOMBRE}}</option>
+          </select>
             <label for="categorias" class="block text-gray-700 text-sm font-bold mb-2">Categoria:</label>
             <span class="text-xs font-bold mb-2">Selecciona una categoria</span>
             <div class="mb-4 flex flex-row justify-center items-center gap-3 flex-wrap">
@@ -138,6 +142,18 @@
           <span>Crear Tag</span>
           <input class="input input-sm input-primary" placeholder="nuevo Tag" [(ngModel)]="subCategoria" [ngModelOptions]="{standalone: true}">
           <button class="btn btn-xs rounded-2xl text-primary" (click)="crearSubCategoria(subCategoria)"  >Crear</button>
+        </div>
+            <div class="flex  flex-row justify-center items-start gap-2">
+          <span>Ingresar Anime o serie</span>
+          <input class="input input-sm input-primary" placeholder="nuevo Tag" [(ngModel)]="anime" [ngModelOptions]="{standalone: true}">
+          <button class="btn btn-xs rounded-2xl text-primary" (click)="ingresarAnime()"  >Crear</button>
+        </div>
+            <div class="flex  flex-col justify-center items-start gap-2">
+          <span>Crear Personaje y asignar Anime</span>
+          <input class="input input-sm input-primary" placeholder="nuevo Tag" [(ngModel)]="personaje" [ngModelOptions]="{standalone: true}">
+          <select class="select select-primary"[ngModelOptions]="{standalone: true}" [(ngModel)]="idAnime"><option *ngFor="let anime of animes"  [value]="anime.ID_ANIME" >{{anime.NOMBRE}}</option></select>
+          
+          <button class="btn btn-xs rounded-2xl text-primary" (click)="ingresarPersonaje()"  >Crear</button>
         </div>
       </div>
       <!-- <div class="flex flex-col justify-center items-center gap-3 border">

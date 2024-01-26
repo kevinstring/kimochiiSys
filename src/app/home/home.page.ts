@@ -176,9 +176,13 @@ this.nuevoProducto.personaje=""
       form.append('tallaS',producto.tallaS)
       form.append('tallaM',producto.tallaM)
       form.append('tallaL',producto.tallaL)
+      form.append('tallaXL',producto.tallaXL)
+      form.append('talla10',producto.talla10)
+      form.append('talla12',producto.talla12)
+      form.append('talla14',producto.talla14)
       form.append('esRopa',this.categoriaRopa.toString())
       form.append('proveedor',producto.proveedor)
-      form.append('personaje',producto.personaje)
+
 
       //llamar al servicio y postear el producto y Mantener la categora.
       this.servicio.post('guardarProducto',form).subscribe(({next:(data:any)=>{

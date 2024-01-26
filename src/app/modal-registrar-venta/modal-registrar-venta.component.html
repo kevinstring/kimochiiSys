@@ -99,16 +99,23 @@
   </div>
 
 
-    <div  *ngIf="!esRopa" class="relative flex flex-row justify-center items-center gap-2 flex-wrap h-max mt-9">
-      <div   *ngFor="let producto of productos; let i = index" (click)="agregarProducto(producto, i,'N')">
+    <div  class="relative flex flex-row justify-center items-center gap-2 flex-wrap h-max mt-9">
+      <div class="flex flex-col justify-center items-center"   *ngFor="let producto of productos; let i = index" >
         <div class="flex flex-col justify-center items-center cursor-pointer">
         <img [src]="convertirCadenaAArray(producto.FOTO)[0]" alt="" class="w-40 h-40">
-          <span class="text-sm">{{producto.NOMBRE}}</span>
+          <span *ngIf="categoriaElegida!==22" (click)="agregarProducto(producto, i,'N')" class="text-sm">{{producto.NOMBRE}}</span>
+          <span *ngIf="categoriaElegida===22" class="text-sm">{{producto.NOMBRE}}</span>
 
           <span class="text-xs">Q{{producto.PRECIO}}</span>
           <span>Cantidad existente: {{producto.CANTIDAD}}</span>
         </div>  
-
+        <div *ngIf="categoriaElegida===22" class="flex flex-row justify-center items-center gap-2 flex-wrap "><button class="btn btn-xs btn-accent" (click)="agregarProducto(producto, i,'S')" *ngIf="producto.TALLA_S!==0">S: {{producto.TALLA_S}}</button>
+          <button  *ngIf="producto.TALLA_M!==0" class="btn btn-xs btn-accent" (click)="agregarProducto(producto, i,'M')">M: {{producto.TALLA_M}}</button>
+          <button  *ngIf="producto.TALLA_L!==0" class="btn btn-xs btn-accent" (click)="agregarProducto(producto, i,'L')">L: {{producto.TALLA_L}}</button>
+          <button  *ngIf="producto.TALLA_XL!==0" class="btn btn-xs btn-accent" (click)="agregarProducto(producto, i,'XL')">XL: {{producto.TALLA_XL}}</button>
+          <button  *ngIf="producto.TALLA_10!==0" class="btn btn-xs btn-accent" (click)="agregarProducto(producto, i,'10')">10: {{producto.TALLA_10}}</button>
+          <button  *ngIf="producto.TALLA_12!==0" class="btn btn-xs btn-accent" (click)="agregarProducto(producto, i,'12')">12: {{producto.TALLA_12}}</button>
+          <button  *ngIf="producto.TALLA_14!==0" class="btn btn-xs btn-accent" (click)="agregarProducto(producto, i,'14')">14: {{producto.TALLA_14}}</button></div>
         </div>
 
     </div>
@@ -120,10 +127,15 @@
 HOLA
         </div>  
         <div class="flex flex-col justify-center items-center cursor-pointer" >
-          <img src="{{producto.FOTO[0]}}" alt="" class="w-40 h-40">
+          <img [src]="convertirCadenaAArray(producto.FOTO)[0]" alt="" class="w-40 h-40">
           <div class="flex flex-row justify-center items-center gap-2"><button class="btn btn-accent" (click)="agregarProducto(producto, i,'S')">S: {{producto.TALLA_S}}</button>
             <button class="btn btn-accent" (click)="agregarProducto(producto, i,'M')">M: {{producto.TALLA_M}}</button>
-            <button class="btn btn-accent" (click)="agregarProducto(producto, i,'L')">L: {{producto.TALLA_L}}</button></div>
+            <button class="btn btn-accent" (click)="agregarProducto(producto, i,'L')">L: {{producto.TALLA_L}}</button>
+            <button class="btn btn-accent" (click)="agregarProducto(producto, i,'L')">XL: {{producto.TALLA_XL}}</button>
+            <button class="btn btn-accent" (click)="agregarProducto(producto, i,'L')">10: {{producto.TALLA_10}}</button>
+            <button class="btn btn-accent" (click)="agregarProducto(producto, i,'L')">12: {{producto.TALLA_12}}</button>
+            <button class="btn btn-accent" (click)="agregarProducto(producto, i,'L')">14: {{producto.TALLA_14}}</button></div>
+
   
           </div>  
         </div>

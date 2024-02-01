@@ -1,0 +1,36 @@
+<ion-content padding>
+<ion-header>a</ion-header>
+<div class="relative flex flex-col justify-center items-center gap-10 mt-10">
+<table class="table table-zebra">
+  <thead>
+    <tr>
+      <th>Fecha</th>
+      <th>Nombre</th>
+      <th>Deuda</th>
+      <th>Accion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let venta of ventasCredito" >
+      <td >{{venta.FECHA}}</td>
+      <td >{{venta.NOMBRE_CLIENTE}}</td>
+      <td>{{venta.TOTAL}}</td>
+      <!-- <td><button class="btn btn-xs bg-primary text-white" class="tooltip" data-tip="hola" >Info</button></td> -->
+
+      <td>
+        <select
+        class="shadow appearance-none border rounded select-xs w-24 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="tipoPago"
+        [(ngModel)]="venta.tipoDePago"
+        [ngModelOptions]="{standalone: true}"
+        (change)="obtenerTipoPago(venta.tipoDePago)"
+      >
+        <option value="efectivo">Efectivo</option>
+        <option value="tarjeta">Tarjeta de Crédito</option>
+        <option value="transferencia">Transferencia Bancaria</option>
+  
+      </select><button class="btn btn-xs bg-green-400 text-white" (click)="cobrarVenta(venta)">Cobrar</button></td>
+    </tr>
+
+  </tbody>
+</table></div></ion-content>

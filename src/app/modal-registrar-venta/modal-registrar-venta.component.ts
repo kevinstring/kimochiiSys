@@ -123,7 +123,7 @@ convertirCadenaAArray(cadena: string): string[] {
     console.error('Error al convertir la cadena a un array:', error);
   }
   return [];
-}
+} 
 
 
 

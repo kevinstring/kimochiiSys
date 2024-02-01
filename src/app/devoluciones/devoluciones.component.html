@@ -1,0 +1,45 @@
+<ion-content padding>
+  <ion-header class="bg-primary text-white">
+
+    Devoluciones
+   
+  </ion-header>
+  <div class="relative flex flex-col justify-center items-center gap-10">
+    <div class="flex flex-col justify-center items-center gap-5">
+      <p>Seleccione la tienda del reclamo</p>
+      <select class="select select-primary" [(ngModel)]="devoluciones.idTienda" (change)="getPedido(devoluciones.idTienda)"
+      [ngModelOptions]="{standalone: true}" >
+        <option *ngFor="let tienda of tiendasInternacionales" [value]="tienda.ID">{{tienda.NOMBRE_PROVEEDOR_INTER}}</option>
+
+      </select>
+      <div *ngIf="divPedidoTienda" >   <span class="text-xs text-red-500">Seleccione el pedido de la tienda</span>
+      <div class="flex flex-row justify-center items-center flex-wrap">
+     
+        <div *ngFor="let pedidos  of pedidosPorTienda" [ngClass]="{'bg-primary text-white': idCompraSeleccionada===pedidos.ID_COMPRA}" class="border-2 border-slate-400 w-32 bg-primary rounded-lg cursor-pointer hover:bg-primary p-2" (click)="compraSeleccionada(pedidos.ID_COMPRA)" >
+            <span>{{pedidos.FECHA_COMPRA}}</span>
+            <p class="text-xs "> {{pedidos.DESCRIPCION}}</p>
+        </div>
+      </div>
+      </div>
+    </div>
+      <div class="flex flex-col justify-center items-center">
+      <span>Realice una descripcion del reclamo</span>
+      <textarea class="textarea" [(ngModel)]="devoluciones.descripcion"></textarea>
+        <div class="flex flex-col justify-center items-center">
+      <span>Especifique el monto devuelto por la tienda</span>
+      <input type="number" [(ngModel)]="devoluciones.monto" class="input input-bordered w-20">
+    </div>
+    </div>
+
+
+    <div>
+      <button class="btn btn-primary" (click)="finalizarDevolucion()">Finalizar</button>
+    </div>
+      
+
+  
+ </div>
+
+ 
+ </ion-content>
+ 

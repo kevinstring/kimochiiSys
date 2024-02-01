@@ -7,6 +7,8 @@ import { ModalController } from '@ionic/angular/standalone';
 import { ModalRegistrarVentaComponent } from '../modal-registrar-venta/modal-registrar-venta.component';
 import { VerVentasComponent } from '../ver-ventas/ver-ventas.component';
 import { Router, RouterModule } from '@angular/router';
+import { VentaCreditoComponent } from '../venta-credito/venta-credito.component';
+import { DevolucionesComponent } from '../devoluciones/devoluciones.component';
 
 @Component({
   selector: 'app-registrar-venta',
@@ -31,6 +33,27 @@ export class RegistrarVentaComponent {
 
   }
 
+  modalRegistrarVentaACredito(){
+    const modal = this.modalController.create({
+      component: VentaCreditoComponent,
+      // cssClass: 'custom-modal'
+    });
+    modal.then((modalElement)=>{
+      modalElement.present();
+    })
+
+  }
+
+  modalDevoluciones()
+  {
+    const modal = this.modalController.create({
+      component: DevolucionesComponent,
+      // cssClass: 'custom-modal'
+    });
+    modal.then((modalElement)=>{
+      modalElement.present();
+    })
+  }
 
 
 }

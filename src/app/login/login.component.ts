@@ -38,7 +38,7 @@ loading=false;
       this.token=res.token;
       localStorage.setItem('token',this.token);
 
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       }else{
         this.loading=false;
         this.usuarioIncorrecto=true;

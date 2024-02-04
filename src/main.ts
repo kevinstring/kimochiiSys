@@ -10,6 +10,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { Toast } from 'primeng/toast';
 import {QRCodeComponent, QRCodeModule} from 'angularx-qrcode/';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 if (environment.production) {
   enableProdMode();
 }
@@ -19,12 +20,14 @@ bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {provide:Toast,useClass: BrowserAnimationsModule},
+    {provide:LocationStrategy,useClass: HashLocationStrategy},
 
 
     provideIonicAngular(),
     provideRouter(routes),
     provideHttpClient(),
     provideAnimations(),
+    
 
   ],
 });

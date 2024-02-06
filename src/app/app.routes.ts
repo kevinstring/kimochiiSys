@@ -5,6 +5,7 @@ export const routes: Routes = [
 
 
 
+  {path:'',redirectTo:'home',pathMatch:'full' },
 
 
   {
@@ -14,21 +15,9 @@ export const routes: Routes = [
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
     canActivate:[AuthGuard]
   },
-  {
-    path: '**',
-    // loadComponent:()=>import('./registro-compras/registro-compras.component').then((m)=>m.RegistroComprasComponent)
 
-    loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
-    canActivate:[AuthGuard]
-  },
 
- 
-  {
-    path:'pdf',
-    loadComponent:()=>import('./pdf-generator-component/pdf-generator-component.component').then((m)=>m.PdfGeneratorComponent),
-    canActivate:[AuthGuard]
-  }
-  ,
+
   {
     path:'compras',
     loadComponent:()=>import('./registro-compras/registro-compras.component').then((m)=>m.RegistroComprasComponent),

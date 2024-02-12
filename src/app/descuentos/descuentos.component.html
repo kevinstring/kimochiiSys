@@ -1,0 +1,64 @@
+<app-nav-bar [home]="false"></app-nav-bar>
+<ion-content class="h-screen">
+
+ <p class="text-center mt-5">La funcion de esta seccion es para seleccionar una tienda (y categoria) para poder hacer un descuento general de todos los productos de dicha tienda</p>
+  
+  <div class="h-screen flex flex-col justify-center items-center">
+    <div class="flex flex-col justify-center items-center">
+      <label class="w-full max-w-xs">
+        <div class="label">
+          <span class="label-text">Selecciona la tienda</span>
+
+        </div>
+        <select class="select select-bordered"  [(ngModel)]="idTienda">
+ 
+          <option *ngFor="let tienda of tiendas" [value]="tienda.ID_PROVEEDOR">{{tienda.NOMBRE_PROVEEDOR}}</option>
+
+        </select>
+
+      </label>
+      <label class="w-full max-w-xs">
+        <div class="label">
+          <span class="label-text">Selecciona la categoria</span>
+
+        </div>
+        <select class="select select-bordered" [(ngModel)]="idCategoria">
+   <option *ngFor="let categoria of categorias" [value]="categoria.ID">{{categoria.NOMBRE}}</option>
+        </select>
+
+      </label>
+      <span class="label-text ">Que deseas hacer?</span>
+      <div class="flex flex-row justify-center items-center flex-wrap">
+     
+      <button class="btn btn-primary w-auto" (click)="divDescuentoGeneral()">Descuento General</button>
+  <button class="btn btn-secondary w-auto" (click)="divDescuentoUnitario()">Descuento unitario</button>
+    </div>
+    </div>
+    <div *ngIf="descuentoGeneral" class="flex flex-col justify-center items-center">
+    
+
+      <div class="flex flex-col justify-center items-center mt-2">
+        <span>Ingrese el monto a descontar</span>
+      <input type="number" class="input input-bordered w-full max-w-xs" [(ngModel)]="descuentosGeneral.montoADescontar"/>
+    </div>
+    
+    <div class="flex flex-col justify-center items-center">
+      <span>Ingrese en multiplo a los cuantos productos se aplicara el descuento</span>
+      <span>(ej. Camisa a partir de 3 se aplica descuento, entonces el multiplo sera 3)</span>
+      
+      <span>(ej. Camisa a partir de 2 se aplica descuento, entonces el multiplo sera 2, el siguiente descuento se aplicara a las 4 camisas, etc.)</span>
+    <input type="number" class="input input-bordered w-full max-w-xs" [(ngModel)]="descuentosGeneral.multiploGeneral"/>
+  </div>
+
+  <button class="btn bg-green-400 text-white" (click)="aplicarDescuentoG()">APLICAR</button>
+
+
+    </div>
+  
+    <div *ngIf="descuentoUnitario">
+      Descuento Unitario gg </div>
+
+ 
+  </div>
+
+</ion-content>

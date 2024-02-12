@@ -44,5 +44,9 @@ export const routes: Routes = [
   path:'login',
   loadComponent:()=>import('./login/login.component').then((m)=>m.LoginComponent)
 },
+{
+  path:'descuentos',
+  loadComponent:()=>import('./descuentos/descuentos.component').then((m)=>m.DescuentosComponent),
+}
 
 ];

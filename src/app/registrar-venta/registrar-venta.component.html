@@ -1,5 +1,7 @@
 <app-nav-bar [home]="false"></app-nav-bar>
 <ion-content class="h-screen">
+
+
   <div class="h-screen flex flex-row justify-center items-center">
 <div class="flex flex-row justify-around items-center gap-6  flex-wrap">
   <button class="btn btn-primary  btn-large min-w-80 min-h-72" (click)=" modalRegistrarVenta()">REGISTRAR VENTA</button>
@@ -7,7 +9,7 @@
   
   <a routerLink="/verVentas"> <button class="btn btn-primary-content btn-large min-w-80 min-h-72">VER VENTAS</button></a>
   <button class="btn btn-primary  btn-large min-w-80 min-h-72" (click)=" modalDevoluciones()">DEVOLUCIONES</button>
-
+  <a routerLink="/descuentos">  <button class="btn btn-secondary  btn-large min-w-80 min-h-72" >AGREGAR DESCUENTOS</button></a>
 
 </div>
 </div>

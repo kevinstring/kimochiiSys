@@ -5,7 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ServicioService {
-   url="https://kimochiistore.com/kystem/back/public/"
+  //  url="https://kimochiistore.com/kystem/back/public/"
+   url="http://localhost:8000/"
   constructor(private http:HttpClient) { 
  
   }

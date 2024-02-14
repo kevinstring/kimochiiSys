@@ -47,6 +47,10 @@ export const routes: Routes = [
 {
   path:'descuentos',
   loadComponent:()=>import('./descuentos/descuentos.component').then((m)=>m.DescuentosComponent),
+},
+{
+  path:'gastos',
+  loadComponent:()=>import('./gastos/gastos.component').then((m)=>m.GastosComponent),
 }
 
 ];

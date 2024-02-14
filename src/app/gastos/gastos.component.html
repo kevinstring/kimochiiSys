@@ -1,0 +1,54 @@
+<app-nav-bar [home]="false"></app-nav-bar>
+<ion-content class="h-screen">
+  <div class="flex flex-col justify-between items-center gap-3 ">
+<div class="mt-5 border-sky-400">
+  
+    <form class="flex flex-col justify-center items-center gap-2">
+      <input type="date" class="input input-primary" [(ngModel)]="agregarGasto.fecha"  [ngModelOptions]="{standalone: true}"/>
+        <input type="text" class=" input input-primary" placeholder="Titulo" [(ngModel)]="agregarGasto.titulo"  [ngModelOptions]="{standalone: true}"/>
+        <textarea type="text" class="textarea textarea-primary" placeholder="Ingrese motivo" [(ngModel)]="agregarGasto.motivo"  [ngModelOptions]="{standalone: true}" >
+        </textarea>
+        <input type="number" class=" input input-primary" placeholder="Monto" [(ngModel)]="agregarGasto.monto"  [ngModelOptions]="{standalone: true}"/>
+
+        <button class="btn btn-primary" (click)="ingresarGasto()">Ingresar</button>
+    </form>
+</div>
+
+<p class="text-primary text-xl">La cantidad de gastos es de <span class="text-red-500">Q{{datos.gastos}}</span> y la cantidad de ventas <span class="text-green-500">Q{{datos.ventas}}</span></p>
+<p class="text-green-500 text-sm" [ngClass]="{'text-red-500': datos.verdeORojo ==0}">{{ datos.mensaje }}</p>
+<p class="text-primary text-sm">La diferencia real es : {{datos.diferencia}}</p>
+
+<div class="flex flex-row justify-center items-center gap-2">
+  <div role="tablist">
+    <a role="tab" class="tab" (click)="verGastos(tiempo.tiempo)" *ngFor="let tiempo of tiempos">{{tiempo.tiempo}}</a>
+  </div>
+  
+</div>
+<div class="overflow-x-auto">
+  <table class="table table-zebra">
+    <!-- head -->
+    <thead>
+      <tr>
+        <th>FECHA</th>
+        <th>TITULO</th>
+        <th>MOTIVO</th>
+        <th>MONTO</th>
+      </tr>
+  
+    <tbody>
+      <!-- row 1 -->
+      <tr *ngFor="let gasto of gastos">
+        <td>{{gasto.FECHA}}</td>
+        <td>{{gasto.TITULO}}</td>
+        <td>{{gasto.MOTIVO}}</td>
+        <td>{{gasto.MONTO}}</td>
+      </tr>
+
+    </tbody>
+    <p>TOTAL GASTO: {{total}}</p>
+    <p></p>
+  </table>
+  
+</div>
+</div>
+</ion-content>

@@ -28,6 +28,7 @@ export class ModalRegistrarVentaComponent  implements OnInit {
   ventaRealizada:any
   productos:any=[]
   productoVenta:any={}
+  idCategoriaRepetida:any
   
   arregloProductos:any=[{cantidadSeleccionada:0}]
   arregloContador:any=[{codigoProducto:' ',cantidadSeleccionada:0}]
@@ -216,54 +217,80 @@ objectValues(obj: any) {
 }
 
 
+contadorCategoria: { [key: number]: number } = {};
 
-agregarProducto(producto: any, i: any,talla:any) {
-  console.log(talla)
+agregarProducto(producto: any, i: any, talla: any) {
+
+
+
+  console.log(talla);
+  console.log(producto);
+
   if (producto.CANTIDAD == 0) {
     this.mensaje.add({ severity: 'error', summary: 'Error', detail: 'No hay stock de este producto' });
     return;
   }
+
   const form = new FormData();
-
-  if(talla!=="N"){
-    form.append('talla',talla)
+  if(i==="subli"){
+      form.append('idProducto', producto.ID_PRODUCTO);
+      form.append('codigoProducto',producto.CODIGO);
+      form.append('cantidad',producto.CANTIDAD);
+      form.append('precio',producto.PRECIO);
+      form.append('idVenta',this.ventaRealizada); 
+    
+      
   }
-
-  form.append('codigoProducto', producto.CODIGO);
+  if (talla !== "N") {
+    form.append('talla', talla);
+    form.append('codigoProducto', producto.CODIGO);
+    form.append('idVenta', this.ventaRealizada);
+  }else if(talla !=="x"){  form.append('codigoProducto', producto.CODIGO);
   form.append('idVenta', this.ventaRealizada);
+  form.append('talla',"Equis");
+
+
+
+
+}
+
+
+  console.log(this.arregloProductos);
+  console.log(producto);
 
   const index = this.arregloProductos.findIndex(p => p.ID_PRODUCTO === producto.ID_PRODUCTO);
 
-  if (index !== -1) {
+  if (index !== -1 && talla !=="x") {
+
     // El producto ya está en el carrito, incrementar la cantidad
     this.arregloProductos[index].cantidadSeleccionada += 1;
 
-    // Buscar en arregloContador y actualizar la cantidad
-    const contadorIndex = this.arregloContador.findIndex(contador => contador.codigoProducto === producto.CODIGO);
-
-    if (contadorIndex !== -1) {
-      this.arregloContador[contadorIndex].cantidadSeleccionada += 1;
-    } else {
-      // Esto no debería suceder, pero si sucede, manejarlo adecuadamente
-      console.error('Error: No se encontró el producto en arregloContador');
-    }
+    // Incrementar el contador de la categoría
+    const categoria = producto.ID_CATEGORIA;
+    this.contadorCategoria[categoria] = (this.contadorCategoria[categoria] || 0) + 1;
 
     form.append('cantidad', this.arregloProductos[index].cantidadSeleccionada.toString());
-  } else {
+    form.append('contadorCategoria', this.contadorCategoria[categoria].toString());
+  } else if (this.arregloContador.findIndex(contador => contador.codigoProducto === producto.CODIGO) === -1) {
     // El producto no está en el carrito, agregarlo con cantidad 1
     this.arregloProductos.push({ ...producto, cantidadSeleccionada: 1 });
+
+    // Incrementar el contador de la categoría
+    const categoria = producto.ID_CATEGORIA;
+    this.contadorCategoria[categoria] = (this.contadorCategoria[categoria] || 0) + 1;
 
     // Agregar a arregloContador con cantidad 1
     this.arregloContador.push({ codigoProducto: producto.CODIGO, cantidadSeleccionada: 1 });
 
     form.append('cantidad', '1');
+    form.append('contadorCategoria', this.contadorCategoria[categoria].toString());
   }
 
   this.servicio.post('postComanda', form).subscribe({
     next: (data: any) => {
       console.log(data);
       this.consultaProductos(this.categoriaElegida);
-console.log(this.arregloProductos)
+      console.log(this.arregloProductos);
       this.mensaje.add({ severity: 'success', summary: 'Exito', detail: 'Se ha agregado el producto' });
     },
     error: (err: any) => {
@@ -272,6 +299,8 @@ console.log(this.arregloProductos)
     }
   });
 }
+
+
 
 
 }

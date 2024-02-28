@@ -4,6 +4,27 @@
  <p class="text-center mt-5">La funcion de esta seccion es para seleccionar una tienda (y categoria) para poder hacer un descuento general de todos los productos de dicha tienda</p>
   
   <div class="h-screen flex flex-col justify-center items-center">
+    <div>
+      <table>
+          <thead>
+              <tr>
+                  <th>Tienda</th>
+                  <th>Descuento</th>
+                  <th>Tipo</th>
+                  <!-- Agrega más encabezados según sea necesario -->
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let descuentoGuardado of descuentosGuardados">
+                 <td >{{descuentoGuardado.NOMBRE_TIENDA}}</td>
+                 <td >{{descuentoGuardado.DESCUENTO}}</td>
+                 <td >{{descuentoGuardado.TIPO_DESCUENTO}}</td>
+              </tr>
+              <!-- Agrega más filas según sea necesario -->
+          </tbody>
+      </table>
+  </div>
+  
     <div class="flex flex-col justify-center items-center">
       <label class="w-full max-w-xs">
         <div class="label">

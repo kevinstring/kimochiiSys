@@ -27,7 +27,7 @@ idCategoria=0
 
 idProducto=null
 
-
+descuentosGuardados=[]
 
 descuentosGeneral={
   montoADescontar:0,
@@ -61,6 +61,7 @@ descuentosUnitario={
      
       this.tiendas=data.tiendas
       this.categorias=data.categorias
+      this.descuentosGuardados=data.descuentos;
     
 
     },

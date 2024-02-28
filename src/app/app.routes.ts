@@ -52,5 +52,12 @@ export const routes: Routes = [
   path:'gastos',
   loadComponent:()=>import('./gastos/gastos.component').then((m)=>m.GastosComponent),
 }
+,
+{
+  path:'vertallas',
+  loadComponent() {
+      return import('./vista-ropa/vista-ropa.component').then(m => m.VistaRopaComponent);
+  },
+}
 
 ];

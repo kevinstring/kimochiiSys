@@ -116,16 +116,32 @@
           <button  *ngIf="producto.TALLA_XL!==0" class="btn btn-xs btn-accent" (click)="agregarProducto(producto, i,'XL')">XL: {{producto.TALLA_XL}}</button>
           <button  *ngIf="producto.TALLA_10!==0" class="btn btn-xs btn-accent" (click)="agregarProducto(producto, i,'10')">10: {{producto.TALLA_10}}</button>
           <button  *ngIf="producto.TALLA_12!==0" class="btn btn-xs btn-accent" (click)="agregarProducto(producto, i,'12')">12: {{producto.TALLA_12}}</button>
-          <button  *ngIf="producto.TALLA_14!==0" class="btn btn-xs btn-accent" (click)="agregarProducto(producto, i,'14')">14: {{producto.TALLA_14}}</button></div>
+          <button  *ngIf="producto.TALLA_14!==0" class="btn btn-xs btn-accent" (click)="agregarProducto(producto, i,'14')">14: {{producto.TALLA_14}}</button>
+        
+        </div>
+          <div *ngIf="categoriaElegida===24" class="flex flex-row justify-center items-center" >
+         
+            <div class="flex flex-col justify-center items-center">
+              <span>Cant.</span>
+
+              <input type="text" [(ngModel)]="producto.CANTIDAD" class="w-16 h-10 input input-primary">
+            </div>
+            <div class="flex flex-col justify-center items-center">
+              <span>Price</span>
+              <input type="number" [(ngModel)]="producto.PRECIO" class="w-16 h-10 input input-primary">
+            </div>
+              <button class="btn btn-accent btn-sm mt-3" (click)="agregarProducto(producto, 'subli','x')">Agregar</button>
+            </div>
+    
         </div>
 
+  
     </div>
-
     
     <div  *ngIf="esRopa" class="relative flex flex-row justify-center items-center gap-2 flex-wrap h-max mt-9">
       <div   *ngFor="let producto of productos; let i = index" >
         <div class="flex flex-col justify-center items-center cursor-pointer" >
-HOLA
+
         </div>  
         <div class="flex flex-col justify-center items-center cursor-pointer" >
           <img [src]="convertirCadenaAArray(producto.FOTO)[0]" alt="" class="w-40 h-40">
